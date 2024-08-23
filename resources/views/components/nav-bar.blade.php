@@ -5,6 +5,7 @@
                 <div>
                     <a class="text-3xl font-bold leading-none" href="#">
                         <h1 class="text-white">YOUR <span class="text-orange-500">LOGO</span></h1>
+                        {{-- <img src="{{ asset('images/logo.png') }}" alt="LOGO" class="w-36"> --}}
                     </a>
                 </div>
 
