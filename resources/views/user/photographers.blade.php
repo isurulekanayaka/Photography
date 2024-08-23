@@ -49,8 +49,20 @@
 <body>
     @extends('layout.layout')
     @section('content')
-        
-        @endsection
+        <div class="relative z-10 w-screen h-[60vh] flex top-0 bg-cover bg-center"
+            style="background-image: url('{{ asset('images/gif1.gif') }}');">
+            <!-- Dark overlay -->
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+
+            <!-- Content inside the div -->
+            <div class="relative flex items-center justify-center w-full">
+                <h2 class="text-2xl lg:text-5xl font-bold text-center text-white">
+                    Find Your <span class="text-orange-500">Perfect Photographer</span>
+                </h2>
+            </div>
+        </div>
+    @endsection
 </body>
+
 
 </html>
