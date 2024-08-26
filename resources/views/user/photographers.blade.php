@@ -49,8 +49,105 @@
 <body>
     @extends('layout.layout')
     @section('content')
-        
-        @endsection
+        <div>
+            <div class="relative z-10 w-screen md:h-[60vh] h-[30vh] flex top-0 bg-cover bg-center"
+                style="background-image: url('{{ asset('images/gif1.gif') }}');">
+                <!-- Dark overlay -->
+                <div class="absolute inset-0 bg-black opacity-60"></div>
+
+                <!-- Content inside the div -->
+                <div class="relative flex items-center justify-center w-full">
+                    <h2 class="text-2xl lg:text-5xl font-bold text-center text-white">
+                        Find Your <span class="text-orange-500">Perfect Photographer</span>
+                    </h2>
+                </div>
+            </div>
+            <div>
+                <div class="w-full lg:w-[1275px] mx-auto mt-2">
+                    <div class="w-full border md:flex p-5 gap-3 rounded-lg mx-auto">
+                        <div class="flex flex-col w-full md:w-1/4 justify-center">
+                            <label for="" class="text-white mb-3 text-lg">Photographer</label>
+                            <input type="text" class="bg-transparent border rounded-lg p-1 text-white">
+                        </div>
+                        <div class="flex flex-col w-full md:w-1/4 justify-center">
+                            <label for="" class="text-white mb-3 text-lg">Location</label>
+                            <input type="text" class="bg-transparent border rounded-lg p-1 text-white">
+                        </div>
+                        
+                        <div class="flex flex-col w-full md:w-1/4 justify-center">
+                            <label for="" class="text-white mb-3 text-lg">Category</label>
+                            <select name="" id="" class="bg-transparent border rounded-lg p-1 text-white">
+                                <option value="">se</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col w-full md:w-1/4 justify-end">
+                            <button class="text-white bg-orange-500 px-2 py-1 rounded-lg  mt-3 md:mt-0">Search <i class="fas fa-search text-white ml-2"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full lg:w-[1275px] mx-auto my-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+                        <div class="flex">
+                            <div
+                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
+                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
+                                    Doe</h3>
+                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
+                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
+                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
+                                    Doe</h3>
+                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
+                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
+                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
+                                    Doe</h3>
+                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
+                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
+                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
+                                    Doe</h3>
+                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
+                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
+                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
+                                    Doe</h3>
+                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
+                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    @endsection
 </body>
 
 </html>
