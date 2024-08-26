@@ -28,7 +28,7 @@
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
                         href="#">About</a></li>
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
-                        href="#">FAQ</a></li>
+                        href="#">Contact Us</a></li>
             </ul>
 
             <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold text-nowrap rounded-xl transition duration-200"
@@ -65,7 +65,7 @@
                             href="#">About</a></li>
                     <li class="mb-1"><a
                             class="block p-4 text-sm font-semibold text-black hover:bg-orange-50 hover:text-orange-500 rounded"
-                            href="#">FQA</a></li>
+                            href="#">Contact Us</a></li>
                 </ul>
             </div>
             <div class="mt-auto">
