@@ -6,7 +6,7 @@
     <ul class="mt-4">
         <span class="text-gray-400 font-bold">Message</span>
         <li class="mb-1 group">
-            <a href=""
+            <a href="{{route('photographer.inbox')}}"
                 class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
                 <img src="{{ asset('images/inbox.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
                 <span class="text-sm">Inbox</span>
@@ -15,14 +15,14 @@
 
         <span class="text-gray-400 font-bold">Pages</span>
         <li class="mb-1 group">
-            <a href=""
+            <a href="{{route('photographer.update-profile')}}"
                 class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
                 <img src="{{ asset('images/profile-setting.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="hospital Icon">
                 <span class="text-sm">Profile Manage</span>
             </a>
         </li>
         <li class="mb-1 group">
-            <a href=""
+            <a href="{{route('photographer.update-gallery')}}"
                 class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
                 <img src="{{ asset('images/galery.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="doctor Icon">
                 <span class="text-sm">Gallery Manage</span>
@@ -30,7 +30,7 @@
         </li>
         <span class="text-gray-400 font-bold">Setting</span>
         <li class="mb-1 group">
-            <form action="" method="POST" class="inline">
+            <form action="{{ route('logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit"
                     class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md w-full">

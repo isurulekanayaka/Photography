@@ -58,7 +58,7 @@
 
                     <!-- User Profile Image -->
                     <div class="md:w-full w-1/2 mx-auto flex justify-center">
-                        <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMnx8cGVvcGxlfGVufDB8MHx8fDE3MTA0ODExOTN8MA&ixlib=rb-4.0.3&q=80&w=1080"
+                        <img src="{{ $photographer->profile_picture ? asset('storage/' . $photographer->profile_picture) : asset('images/default-image.jpg') }}"
                             alt="User Profile"
                             class="rounded-full object-cover xl:w-[16rem] xl:h-[16rem] lg:w-[16rem] lg:h-[16rem] md:w-[12rem] md:h-[12rem] sm:w-[10rem] sm:h-[10rem] xs:w-[8rem] xs:h-[8rem] outline outline-2 outline-offset-2 outline-orange-500 shadow-xl relative xl:bottom-[7rem] lg:bottom-[8rem] md:bottom-[6rem] sm:bottom-[5rem] xs:bottom-[4.3rem]" />
                     </div>
@@ -66,21 +66,11 @@
                     <div
                         class="xl:w-[1275px] lg:w-[1275px] md:w-[94%] sm:w-[96%] xs:w-[92%] mx-auto flex flex-col gap-4 justify-center items-center relative xl:-top-[6rem] lg:-top-[6rem] md:-top-[4rem] sm:-top-[3rem] xs:-top-[2.2rem]  px-2">
                         <!-- FullName -->
-                        <h1 class="text-center text-orange-500 dark:text-white text-4xl">Samuel Abera</h1>
+                        <h1 class="text-center text-orange-500 dark:text-white text-4xl">{{ $photographer->user->name }}
+                        </h1>
                         <!-- About -->
                         <p class="w-full text-white text-md text-pretty sm:text-center xs:text-justify">
-                            Lorem, ipsum dolor sit amet
-                            consectetur adipisicing elit. Quisquam debitis labore consectetur voluptatibus mollitia dolorem
-                            veniam omnis ut quibusdam minima sapiente repellendus asperiores explicabo, eligendi odit,
-                            dolore
-                            similique fugiat dolor, doloremque eveniet. Odit, consequatur. Ratione voluptate exercitationem
-                            hic
-                            eligendi vitae animi nam in, est earum culpa illum aliquam. Atque aperiam et voluptatum
-                            voluptate
-                            distinctio, nostrum hic voluptatibus nisi. Eligendi voluptatibus numquam maxime voluptatem
-                            labore
-                            similique qui illo est magnam adipisci autem quisquam, quia incidunt excepturi, possimus odit
-                            praesentium?</p>
+                            {{ $photographer->description }}</p>
 
                         <!-- Detail -->
                         <div class="w-full my-auto py-6 flex flex-col justify-center gap-2">
@@ -89,11 +79,13 @@
                                     <dl class="text-gray-900 divide-y divide-gray-200 ">
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Full Name</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">Samuel Abera</dd>
+                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->user->name }}
+                                            </dd>
                                         </div>
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Email</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">samuelabera87@gmail.com</dd>
+                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->user->email }}
+                                            </dd>
                                         </div>
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Availability</dt>
@@ -105,17 +97,20 @@
                                     <dl class="text-gray-900 divide-y divide-gray-200 ">
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Phone Number</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">+251913****30</dd>
+                                            <dd class="text-lg font-semibold text-gray-300">
+                                                {{ $photographer->user->contact }}</dd>
                                         </div>
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Location</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">Ethiopia, Addis Ababa</dd>
+                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->area }}
+                                                {{ $photographer->city }} </dd>
                                         </div>
 
 
                                         <div class="flex flex-col py-3">
                                             <dt class="mb-1 text-white md:text-lg">Website</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">https://www.teclick.com</dd>
+                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->website }}
+                                            </dd>
                                         </div>
                                     </dl>
                                 </div>

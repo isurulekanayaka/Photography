@@ -143,77 +143,24 @@
                             <div class="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
                                 <div id="slider"
                                     class="h-full flex gap-8 items-center justify-start transition ease-out duration-700">
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                                    @foreach ($photographers as $photographer)
+                                        <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
+                                            <div
+                                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                                <img src="{{ $photographer->profile_picture ? asset('storage/' . $photographer->profile_picture) : asset('images/default-image.jpg') }}"
+                                                    alt="{{ $photographer->user->name }}"
+                                                    class="w-full h-48 object-cover rounded-lg mb-4">
+                                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">
+                                                    {{ $photographer->user->name }}</h3>
+                                                <p class="text-gray-100 transition-colors duration-300">
+                                                    {{ $photographer->category }}</p>
+                                                <a href="{{ route('photographer.profile', ['id' => $photographer->id]) }}">
+                                                    <p class="mt-4 transition-colors duration-300 text-orange-500">View
+                                                        Profile</p>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer
-                                            </p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">
-                                                Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer
-                                            </p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
-                                        <div
-                                            class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                            <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                                class="w-full h-48 object-cover rounded-lg mb-4">
-                                            <h3 class="text-xl font-semibold text-white transition-colors duration-300">
-                                                Jane
-                                                Doe</h3>
-                                            <p class="text-gray-100 transition-colors duration-300">Wedding Photographer
-                                            </p>
-                                            <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                     <!-- Add more image containers as needed -->
                                 </div>
                             </div>
@@ -464,7 +411,7 @@
                 prev.addEventListener("click", goPrev);
             </script>
         </div>
-        @endsection
+    @endsection
 </body>
 
 </html>

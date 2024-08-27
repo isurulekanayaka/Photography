@@ -74,70 +74,62 @@
                                 <a class="text-blue-500 hover:text-blue-700" href="#">Login</a>
                             </p>
                         </div>
-
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+                            <!-- Name Field -->
                             <div>
-                                <label for="email"
-                                    class="block text-sm font-medium leading-5  text-gray-700">Name</label>
+                                <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Name</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input id="name" name="name" placeholder="John Doe" type="text"
-                                        required=""
+                                    <input id="name" name="name" placeholder="John Doe" type="text" required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                    <div
-                                        class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                                clip-rule="evenodd">
-                                            </path>
-                                        </svg>
-                                    </div>
                                 </div>
                             </div>
 
+                            <!-- Contact Number Field -->
                             <div class="mt-6">
-                                <label for="contact"
-                                    class="block text-sm font-medium leading-5 text-gray-700">Contact Number</label>
-                                    <div class="mt-1 relative rounded-md shadow-sm">
-                                        <input id="contact" name="contact" placeholder="07X XXX XXXX" type="contact"
-                                            required=""
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                    </div>
+                                <label for="contact" class="block text-sm font-medium leading-5 text-gray-700">Contact
+                                    Number</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <input id="contact" name="contact" placeholder="07X XXX XXXX" type="text" required
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                </div>
                             </div>
 
+                            <!-- Email Field -->
                             <div class="mt-6">
-                                <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
-                                    Email address
-                                </label>
+                                <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email
+                                    address</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
                                     <input id="email" name="email" placeholder="user@example.com" type="email"
-                                        required=""
+                                        required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 </div>
                             </div>
 
+                            <!-- Hidden Role Field -->
+                            <input type="hidden" name="role" value="user">
+
+                            <!-- Password Field -->
                             <div class="mt-6">
-                                <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
-                                    Password
-                                </label>
+                                <label for="password"
+                                    class="block text-sm font-medium leading-5 text-gray-700">Password</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <input id="password" name="password" type="password" required=""
+                                    <input id="password" name="password" type="password" required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 </div>
                             </div>
 
+                            <!-- Confirm Password Field -->
                             <div class="mt-6">
                                 <label for="password_confirmation"
-                                    class="block text-sm font-medium leading-5 text-gray-700">
-                                    Confirm Password
-                                </label>
+                                    class="block text-sm font-medium leading-5 text-gray-700">Confirm Password</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <input id="password_confirmation" name="password_confirmation" type="password"
-                                        required=""
+                                    <input id="password_confirmation" name="password_confirmation" type="password" required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                 </div>
                             </div>
 
+                            <!-- Submit Button -->
                             <div class="mt-6">
                                 <span class="block w-full rounded-md shadow-sm">
                                     <button type="submit"
@@ -147,6 +139,7 @@
                                 </span>
                             </div>
                         </form>
+
                         <!-- Switch to Photographer Registration -->
                         <div class="text-center mt-5">
                             <p class="text-sm text-gray-600">Are you a photographer? <a
@@ -171,7 +164,8 @@
                             </p>
                         </div>
 
-                        <form>
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                            @csrf
                             <!-- Profile Photo -->
                             <div class="mb-1">
                                 <label for="profile-photo" class="mb-3 block text-base font-medium text-[#07074D]">
@@ -180,6 +174,9 @@
                                 <input type="file" name="profile-photo" id="profile-photo"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
+
+                              <!-- Hidden Role Field -->
+                              <input type="hidden" name="role" value="photographer">
 
                             <!-- Full Name -->
                             <div class="mb-1">
@@ -205,7 +202,7 @@
                                     <label for="phone" class="mb-3 block text-base font-medium text-[#07074D]">
                                         Phone Number
                                     </label>
-                                    <input type="text" name="phone" id="phone"
+                                    <input type="text" name="contact" id="contact"
                                         placeholder="Enter your phone number"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
@@ -273,11 +270,11 @@
                                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>
                                     <div class="w-full px-3 md:w-1/2 mb-5">
-                                        <label for="confirm-password"
+                                        <label for="password_confirmation"
                                             class="mb-1 block text-base font-semibold text-[#07074D] md:text-xl">
                                             Confirm Password
                                         </label>
-                                        <input type="password" name="confirm_password" id="confirm-password"
+                                        <input type="password" name="password_confirmation" id="password_confirmation"
                                             placeholder="Confirm password"
                                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>
