@@ -68,14 +68,18 @@
                 <div class="h-screen flex justify-center items-center">
                     <div class="bg-white p-8 w-full md:max-w-[525px] rounded-xl mx-auto">
                         <h1 class="text-3xl font-bold mb-8 text-center">Login</h1>
-                        <form>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf <!-- CSRF token for security -->
                             <div class="mb-4">
                                 <label class="block font-semibold text-gray-700 mb-2" for="email">
                                     Email Address
                                 </label>
                                 <input
                                     class="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="email" type="email" placeholder="Enter your email address" />
+                                    id="email" name="email" type="email" placeholder="Enter your email address" value="{{ old('email') }}" />
+                                @error('email')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="block font-semibold text-gray-700 mb-2" for="password">
@@ -83,17 +87,21 @@
                                 </label>
                                 <input
                                     class="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="password" type="password" placeholder="Enter your password" />
+                                    id="password" name="password" type="password" placeholder="Enter your password" />
+                                @error('password')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
                                 <a class="text-black hover:text-black" href="#">Forgot your password?</a>
                             </div>
                             <div class="mb-6">
                                 <button
                                     class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                                    type="button">
+                                    type="submit">
                                     Login
                                 </button>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
