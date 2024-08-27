@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('photographer.gallery');
 });
 
 Route::get('/home',function(){
@@ -38,4 +38,16 @@ Route::get('/contact', function () {
 
 Route::get('/login', function () {
     return view('auth.login');
+});
+
+Route::get('/register', function () {
+    return view('auth.register');
+});
+
+Route::get('/inbox', function () {
+    return view('photographer.inbox');
+});
+
+Route::get('/protographer-profile', function () {
+    return view('photographer.profile');
 });
