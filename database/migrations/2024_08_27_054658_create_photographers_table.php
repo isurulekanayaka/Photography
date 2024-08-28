@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // FK as unsigned big integer
             $table->text('description'); // Column for description
             $table->text('experience'); // Column for experience
-            $table->string('category'); // Column for category
+            $table->unsignedBigInteger('category_id'); // Column for category
             $table->string('area'); // Column for area
             $table->string('city'); // Column for city
             $table->string('website')->nullable(); // Column for website, nullable
@@ -27,6 +27,7 @@ return new class extends Migration
     
             // Setting up foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
     

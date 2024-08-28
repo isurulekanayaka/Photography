@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Appointment;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class AppointmentController extends Controller
+{
+
+    public function inbox(Request $request)
+    {
+        // Retrieve the logged-in photographer
+        $photographer = Auth::user()->photographer;
+
+        // Retrieve appointments for the photographer where approval is 'not approved'
+        $appointments = Appointment::where('photographer_id', $photographer->id)
+            ->where('approval', 'not approved')
+            ->get();
+
+        // Pass the appointments and user to the view
+        return view('photographer.inbox', compact('appointments'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'photographer_id' => 'required|exists:photographers,id',
+            'date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        $user = Auth::check();
+
+        Appointment::create([
+            'photographer_id' => $request->input('photographer_id'),
+            'date' => $request->input('date'),
+            'location' => $request->input('location'),
+            'message' => $request->input('message'),
+            'user_id' => $user,
+        ]);
+
+        return redirect()->back()->with('success', 'Appointment created successfully.');
+    }
+
+    public function approve($id)
+    {
+        // Find the appointment by id
+        $appointment = Appointment::find($id);
+    
+        // Check if the appointment exists
+        if (!$appointment) {
+            return redirect()->back()->with('error', 'Appointment not found.');
+        }
+    
+        // Update the approval status to 'approved'
+        $appointment->approval = 'approved';
+        $appointment->save();
+    
+        return redirect()->back()->with('success', 'Appointment approved successfully.');
+    }
+    
+    public function reject(Request $request)
+    {
+        // Find the appointment by id
+        $appointment = Appointment::find($request->id);
+    
+        // Check if the appointment exists
+        if (!$appointment) {
+            return redirect()->back()->with('error', 'Appointment not found.');
+        }
+    
+        // Update the approval status to 'reject'
+        $appointment->approval = 'reject';
+        $appointment->save();
+    
+        return redirect()->back()->with('success', 'Appointment rejected successfully.');
+    }
+    
+    
+}

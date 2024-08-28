@@ -88,17 +88,17 @@
                     <h3 class="text-xl text-white font-semibold mb-4">Send Us a Message</h3>
                     <form action="" class="space-y-4">
                         <div>
-                            <label for="name" class="block text-sm text-gray-300 mb-2">Your Name</label>
+                            <label for="name" class="block text-sm text-gray-300 mb-2 flex justify-start">Your Name</label>
                             <input type="text" id="name" name="name" placeholder="Enter your name"
                                 class="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
                         </div>
                         <div>
-                            <label for="email" class="block text-sm text-gray-300 mb-2">Your Email</label>
+                            <label for="email" class="block text-sm text-gray-300 mb-2 flex justify-start">Your Email</label>
                             <input type="email" id="email" name="email" placeholder="Enter your email"
                                 class="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
                         </div>
                         <div>
-                            <label for="message" class="block text-sm text-gray-300 mb-2">Your Message</label>
+                            <label for="message" class="block text-sm text-gray-300 mb-2 flex justify-start">Your Message</label>
                             <textarea id="message" name="message" placeholder="Type your message here"
                                 class="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 h-32"></textarea>
                         </div>

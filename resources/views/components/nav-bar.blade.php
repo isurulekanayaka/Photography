@@ -3,7 +3,7 @@
         <nav class="relative px-4 py-4 flex justify-between items-center bg-black w-[1275px] mx-auto">
             <div class="flex justify-between w-screen px-5">
                 <div>
-                    <a class="text-3xl font-bold leading-none" href="#">
+                    <a class="text-3xl font-bold leading-none" href="{{ route('home') }}">
                         <h1 class="text-white">YOUR <span class="text-orange-500">LOGO</span></h1>
                         {{-- <img src="{{ asset('images/logo.png') }}" alt="LOGO" class="w-36"> --}}
                     </a>
@@ -22,17 +22,17 @@
             <ul
                 class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:w-auto lg:space-x-16">
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
-                        href="#">Home</a></li>
+                        href="{{ route('home') }}">Home</a></li>
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
-                        href="#">Photographers</a></li>
+                        href="{{ route('photographers') }}">Photographers</a></li>
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
-                        href="#">About</a></li>
+                        href="{{ route('about') }}">About</a></li>
                 <li><a class="flex justify-center items-center py-4 hover:border-b text-base border-orange-500 hover:text-orange-500 cursor-pointer text-white group"
-                        href="#">Contact Us</a></li>
+                        href="{{ route('contact') }}">Contact Us</a></li>
             </ul>
 
             <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold text-nowrap rounded-xl transition duration-200"
-                href="#">Sign in</a>
+                href="{{ route('login') }}">Sign in</a>
         </nav>
     </div>
 
@@ -41,7 +41,7 @@
         <nav
             class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
             <div class="flex items-center mb-8">
-                <a class="mr-auto text-3xl font-bold leading-none" href="#">
+                <a class="mr-auto text-3xl font-bold leading-none" href="{{ route('home') }}">
                     <h1 class="text-black">YOUR <span class="text-orange-500">LOGO</span></h1>
                 </a>
                 <button class="navbar-close">
@@ -56,22 +56,22 @@
                 <ul>
                     <li class="mb-1"><a
                             class="block p-4 text-sm font-semibold text-black hover:bg-orange-50 hover:text-orange-500 rounded"
-                            href="#">Home</a></li>
+                            href="{{ route('home') }}">Home</a></li>
                     <li class="mb-1"><a
                             class="block p-4 text-sm font-semibold text-black hover:bg-orange-50 hover:text-orange-500 rounded"
-                            href="#">Photographers</a></li>
+                            href="{{ route('photographers') }}">Photographers</a></li>
                     <li class="mb-1"><a
                             class="block p-4 text-sm font-semibold text-black hover:bg-orange-50 hover:text-orange-500 rounded"
-                            href="#">About</a></li>
+                            href="{{ route('about') }}">About</a></li>
                     <li class="mb-1"><a
                             class="block p-4 text-sm font-semibold text-black hover:bg-orange-50 hover:text-orange-500 rounded"
-                            href="#">Contact Us</a></li>
+                            href="{{ route('contact') }}">Contact Us</a></li>
                 </ul>
             </div>
             <div class="mt-auto">
                 <div class="pt-6">
                     <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-orange-500 hover:text-white rounded-xl"
-                        href="#">Sign in</a>
+                        href="{{ route('login') }}">Sign in</a>
                 </div>
             </div>
         </nav>

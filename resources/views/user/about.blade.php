@@ -87,14 +87,14 @@
                     just the
                     visual beauty of a scene, but the emotions and memories that make it truly unforgettable.
                 </p>
-                <div class="flex justify-center space-x-8 mt-8 animate-fadeIn">
+                <div class="flex justify-center space-x-8 mt-8 animate-fadeIn ">
                     <div class="transition transform hover:scale-110">
-                        <h3 class="text-4xl font-bold  text-orange-500">100+</h3>
-                        <p class="text-white">Satisfied Clients</p>
+                        <h3 class="text-4xl font-bold  text-orange-500 cursor-grab">100+</h3>
+                        <p class="text-white cursor-grab">Satisfied Clients</p>
                     </div>
                     <div class="transition transform hover:scale-110">
-                        <h3 class="text-4xl font-bold  text-orange-500">15+</h3>
-                        <p class="text-white">Years of Experience</p>
+                        <h3 class="text-4xl font-bold  text-orange-500 cursor-grab">15+</h3>
+                        <p class="text-white cursor-grab">Years of Experience</p>
                     </div>
                 </div>
             </section>

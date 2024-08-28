@@ -63,87 +63,60 @@
                 </div>
             </div>
             <div>
-                <div class="w-full lg:w-[1275px] mx-auto mt-2">
-                    <div class="w-full border md:flex p-5 gap-3 rounded-lg mx-auto">
-                        <div class="flex flex-col w-full md:w-1/4 justify-center">
-                            <label for="" class="text-white mb-3 text-lg">Photographer</label>
-                            <input type="text" class="bg-transparent border rounded-lg p-1 text-white">
-                        </div>
-                        <div class="flex flex-col w-full md:w-1/4 justify-center">
-                            <label for="" class="text-white mb-3 text-lg">Location</label>
-                            <input type="text" class="bg-transparent border rounded-lg p-1 text-white">
-                        </div>
-                        
-                        <div class="flex flex-col w-full md:w-1/4 justify-center">
-                            <label for="" class="text-white mb-3 text-lg">Category</label>
-                            <select name="" id="" class="bg-transparent border rounded-lg p-1 text-white">
-                                <option value="">se</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col w-full md:w-1/4 justify-end">
-                            <button class="text-white bg-orange-500 px-2 py-1 rounded-lg  mt-3 md:mt-0">Search <i class="fas fa-search text-white ml-2"></i></button>
+                <form action="{{ route('photographers.filter') }}" method="GET">
+                    <div class="w-full lg:w-[1275px] mx-auto mt-2">
+                        <div class="w-full border md:flex p-5 gap-3 rounded-lg mx-auto">
+                            <div class="flex flex-col w-full md:w-1/4 justify-center">
+                                <label for="photographer_name" class="text-white mb-3 text-lg">Photographer</label>
+                                <input type="text" name="photographer_name" id="photographer_name" class="bg-black border rounded-lg p-1 text-white">
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/4 justify-center">
+                                <label for="location" class="text-white mb-3 text-lg">Location</label>
+                                <input type="text" name="location" id="location" class="bg-black border rounded-lg p-1 text-white">
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/4 justify-center">
+                                <label for="category_id" class="text-white mb-3 text-lg">Category</label>
+                                <select name="category_id" id="category_id" class="bg-black border rounded-lg p-1 text-white">
+                                    <option value="" selected>-- Select Category --</option>
+                                    @forelse ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @empty
+                                        <option value="" disabled>-- No categories available --</option>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/4 justify-end">
+                                <button type="submit" class="text-white bg-orange-500 px-2 py-1 rounded-lg mt-3 md:mt-0">
+                                    Search <i class="fas fa-search text-white ml-2"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
+                
                 <div class="w-full lg:w-[1275px] mx-auto my-10">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-                        <div class="flex">
-                            <div
-                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                    Doe</h3>
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                        @forelse ($photographers as $photographer)
+                            <div class="flex">
+                                <div
+                                    class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                    <img src="{{ $photographer->profile_picture ? asset('storage/' . $photographer->profile_picture) : asset('images/default-image.jpg') }}" alt="Photographer 2"
+                                        class="w-full h-48 object-cover rounded-lg mb-4">
+                                    <h3 class="text-xl font-semibold text-white transition-colors duration-300">{{ $photographer->user->name }}</h3>
+                                    <p class="text-gray-100 transition-colors duration-300">{{ $photographer->category->name }}</p>
+                                    <a href="{{ route('photographer.profile', ['id' => $photographer->id]) }}">
+                                        <p class="mt-4 transition-colors duration-300 text-orange-500">View
+                                            Profile</p>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex">
-                            <div
-                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                    Doe</h3>
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
+                        @empty
+                            <div class="col-span-full text-center">
+                                <p class="text-gray-500">No photographers available at the moment.</p>
                             </div>
-                        </div>
-                        <div class="flex">
-                            <div
-                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                    Doe</h3>
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div
-                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                    Doe</h3>
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div
-                                class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/profile01.jpg') }}" alt="Photographer 2"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h3 class="text-xl font-semibold text-white transition-colors duration-300">Jane
-                                    Doe</h3>
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300 text-orange-500">View Profile</p>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
-                    
+
                 </div>
             </div>
         </div>

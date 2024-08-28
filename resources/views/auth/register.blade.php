@@ -70,9 +70,10 @@
                         <h1 class="text-3xl font-bold mb-8 text-center">User Registration</h1>
                         <!-- Link to Login Form -->
                         <div class="text-center my-4">
-                            <p class="text-sm text-gray-600">Already have an account?
-                                <a class="text-blue-500 hover:text-blue-700" href="#">Login</a>
-                            </p>
+                            <p class="text-sm text-gray-600">Are you a photographer? <a
+                                    class="text-orange-500 hover:text-orange-700" href="#"
+                                    onclick="switchToPhotographerForm()">Register as Photographer</a></p>
+
                         </div>
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
@@ -142,9 +143,9 @@
 
                         <!-- Switch to Photographer Registration -->
                         <div class="text-center mt-5">
-                            <p class="text-sm text-gray-600">Are you a photographer? <a
-                                    class="text-orange-500 hover:text-orange-700" href="#"
-                                    onclick="switchToPhotographerForm()">Register as Photographer</a></p>
+                            <p class="text-sm text-gray-600">Already have an account?
+                                <a class="text-orange-500 hover:text-orange-700" href="{{ route('login') }}">Login</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -159,9 +160,10 @@
                         <h1 class="text-3xl font-bold mb-8 text-center">Photographer Registration</h1>
                         <!-- Link to Login Form -->
                         <div class="text-center my-2">
-                            <p class="text-sm text-gray-600">Already have an account?
-                                <a class="text-blue-500 hover:text-blue-700" href="#">Login</a>
-                            </p>
+
+                            <p class="text-gray-600">Are you a User? <a class="text-orange-500 hover:text-orange-700"
+                                    href="#" onclick="switchToUserForm()">Register as User</a></p>
+
                         </div>
 
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -175,8 +177,8 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
 
-                              <!-- Hidden Role Field -->
-                              <input type="hidden" name="role" value="photographer">
+                            <!-- Hidden Role Field -->
+                            <input type="hidden" name="role" value="photographer">
 
                             <!-- Full Name -->
                             <div class="mb-1">
@@ -232,11 +234,14 @@
                                 </label>
                                 <select id="categories" name="category"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                    <option value="wedding">Wedding</option>
-                                    <option value="sports">Sports</option>
-                                    <option value="portrait">Portrait</option>
-                                    <!-- Add more categories as needed -->
+                                    <option value="" selected>-- Select Category --</option>
+                                    @forelse ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @empty
+                                        <option value="" disabled>-- No categories available --</option>
+                                    @endforelse
                                 </select>
+
                             </div>
 
 
@@ -293,9 +298,9 @@
                         </form>
                         <!-- Switch to User Registration -->
                         <div class="text-center mt-5">
-                            <p class="text-sm text-gray-600">Already a member? <a
-                                    class="text-orange-500 hover:text-orange-700" href="#"
-                                    onclick="switchToUserForm()">Register as User</a></p>
+                            <p class="text-gray-600">Already have an account?
+                                <a class="text-orange-500 hover:text-orange-700" href="{{ route('login') }}">Login</a>
+                            </p>
                         </div>
                     </div>
 

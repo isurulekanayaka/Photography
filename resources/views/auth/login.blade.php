@@ -68,6 +68,8 @@
                 <div class="h-screen flex justify-center items-center">
                     <div class="bg-white p-8 w-full md:max-w-[525px] rounded-xl mx-auto">
                         <h1 class="text-3xl font-bold mb-8 text-center">Login</h1>
+                       
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf <!-- CSRF token for security -->
                             <div class="mb-4">
@@ -76,7 +78,8 @@
                                 </label>
                                 <input
                                     class="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="email" name="email" type="email" placeholder="Enter your email address" value="{{ old('email') }}" />
+                                    id="email" name="email" type="email" placeholder="Enter your email address"
+                                    value="{{ old('email') }}" />
                                 @error('email')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
@@ -91,17 +94,23 @@
                                 @error('password')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
-                                <a class="text-black hover:text-black" href="#">Forgot your password?</a>
+
                             </div>
-                            <div class="mb-6">
+                            <div class="mt-6">
                                 <button
                                     class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                                     type="submit">
                                     Login
                                 </button>
                             </div>
+                            <div class="mt-4 justify-center flex">
+                                <a class="text-black" href="{{ route('register') }}">
+                                    New user? <span class="text-orange-500">Register here.</span>
+                                </a>
+                            </div>
+                                                       
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
