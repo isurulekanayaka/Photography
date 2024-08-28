@@ -31,7 +31,10 @@
         <li class="dropdown ml-3">
             <button type="button" class="dropdown-toggle flex items-center">
                 <div class="p-2 md:block text-left">
-                    <h2 class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</h2>
+                    <h2 class="text-sm font-semibold text-gray-800">
+                        {{ Auth::user()->name ?? 'Anonymous User' }}
+                    </h2>
+                    
                 </div>
             </button>
             <ul

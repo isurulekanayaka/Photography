@@ -53,7 +53,7 @@
             <section class="w-full overflow-hidden dark:bg-gray-900">
                 <div class="w-full mx-auto">
                     <!-- User Cover IMAGE -->
-                    <img src="https://images.unsplash.com/photo-1560697529-7236591c0066?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMHx8Y292ZXJ8ZW58MHwwfHx8MTcxMDQ4MTEwNnww&ixlib=rb-4.0.3&q=80&w=1080"
+                    <img src="{{ $photographer->cover_image ? asset('storage/' . $photographer->cover_image) : asset('images/default-image.jpg') }}"
                         alt="User Cover" class="w-full xl:h-[20rem] lg:h-[22rem] md:h-[16rem] sm:h-[13rem] xs:h-[9.5rem]" />
 
                     <!-- User Profile Image -->
@@ -116,20 +116,44 @@
                                 </div>
                                 <div class="w-2/4">
                                     <div
-                                        class="p-8 rounded-lg shadow-lg max-w-md mx-auto border border-gray-700 mb-10 bg-transparent">
+                                        class="p-8 rounded-lg shadow-lg max-w-md mx-auto border border-gray-700 mb-10 bg-gray-800">
                                         <h3 class="text-2xl text-white font-semibold mb-4">Send Your Message Quickly</h3>
-                                        <form action="" class="space-y-4">
-                                            <div>
-                                                <label for="message" class="block text-sm text-gray-300 mb-2">Your
-                                                    Message</label>
-                                                <textarea id="message" name="message" placeholder="Type your message here"
-                                                    class="w-full p-3 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none h-32"></textarea>
+                                        <form action="{{ route('appointments.store') }}" method="POST" class="space-y-4">
+                                            @csrf
+                                            <input type="hidden" value="{{ $photographer->id }}" name="photographer_id" id="photographer_id">
+                                            <div class="flex gap-2">
+                                                <!-- Date Input -->
+                                                <div class="relative">
+                                                    <label for="date" class="block text-sm text-white mb-2">Date</label>
+                                                    <input id="date" name="date" type="date"
+                                                        placeholder="Select date"
+                                                        class="w-full p-1 rounded-lg bg-transparent text-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                                </div>
+                                        
+                                                <!-- Location Input -->
+                                                <div>
+                                                    <label for="location"
+                                                        class="block text-sm text-white mb-2">Location</label>
+                                                    <input id="location" name="location" type="text"
+                                                        placeholder="Enter location"
+                                                        class="w-full p-1 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder:text-white">
+                                                </div>
                                             </div>
+                                        
+                                            <!-- Message Textarea -->
+                                            <div>
+                                                <label for="message" class="block text-sm text-white mb-2">Your Message</label>
+                                                <textarea id="message" name="message" placeholder="Type your message here"
+                                                    class="placeholder:text-white w-full p-1 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none h-16"></textarea>
+                                            </div>
+                                        
+                                            <!-- Submit Button -->
                                             <button type="submit"
                                                 class="w-full py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition duration-300 ease-in-out">
                                                 Send
                                             </button>
                                         </form>
+                                        
                                     </div>
                                 </div>
 
@@ -141,76 +165,26 @@
                             <div id="imageGallery" class="w-full h-full select-none">
                                 <div class="max-w-6xl mx-auto py-8">
                                     <ul id="gallery" class="grid grid-cols-2 gap-8 lg:grid-cols-5">
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                                alt="Scenic view of a mountain during sunrise"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.pexels.com/photos/3618162/pexels-photo-3618162.jpeg"
-                                                alt="Beautiful sunset over the ocean"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.unsplash.com/photo-1689217634234-38efb49cb664?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
-                                                alt="Forest with sunlight filtering through trees"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.unsplash.com/photo-1520350094754-f0fdcac35c1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-                                                alt="Snow-covered mountain peak"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://cdn.devdojo.com/images/june2023/mountains-10.jpeg"
-                                                alt="Mountain range with cloudy sky"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://cdn.devdojo.com/images/june2023/mountains-06.jpeg"
-                                                alt="Serene lake with mountains in the background"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.pexels.com/photos/1891234/pexels-photo-1891234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                                alt="Calm ocean waves under a pink sky"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1965&q=80"
-                                                alt="Sunset over a grassy field"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.pexels.com/photos/4256852/pexels-photo-4256852.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                                alt="Rocky shore with a lighthouse in the distance"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
-                                        <li class="group relative">
-                                            <img onclick="imageGalleryOpen(event)"
-                                                src="https://images.unsplash.com/photo-1541795083-1b160cf4f3d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
-                                                alt="Desert landscape under a clear blue sky"
-                                                class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                loading="lazy" />
-                                        </li>
+                                        @forelse($images as $key => $image)
+                                            @if ($image)
+                                                <li class="group relative">
+                                                    <img onclick="imageGalleryOpen(event)"
+                                                        src="{{ asset('storage/' . $image) }}" alt="Gallery Image"
+                                                        class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                                                        loading="lazy" />
+                                                </li>
+                                            @else
+                                                <li class="group relative">
+                                                    <img src="{{ asset('images/default-image.jpg') }}" alt="Default Image"
+                                                        class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg"
+                                                        loading="lazy" />
+                                                </li>
+                                            @endif
+                                        @empty
+                                            <li class="col-span-full text-center w-full border py-5 px-10">
+                                                <p class="text-gray-100">No images available.</p>
+                                            </li>
+                                        @endforelse
                                     </ul>
                                 </div>
 

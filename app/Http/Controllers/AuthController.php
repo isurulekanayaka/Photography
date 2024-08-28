@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Log;
 use App\Models\User;
 use App\Models\Photographer;
@@ -15,7 +16,9 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Adjust the view path as necessary
+        $categories=Category::all();
+
+        return view('auth.register',compact('categories')); // Adjust the view path as necessary
     }
 
     public function register(Request $request)
@@ -76,7 +79,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'role' => $request->input('role'),
             ]);
-
+// dd($request);
             // Create photographer-specific details if the role is photographer
             if ($user->role === 'photographer') {
                 Photographer::create([
@@ -84,7 +87,7 @@ class AuthController extends Controller
                     'profile_picture' => $profilePhotoPath, // Adjust the field name to match the migration
                     'description' => $request->input('description'),
                     'experience' => $request->input('experience'),
-                    'category' => $request->input('category'),
+                    'category_id' => $request->input('category'),
                     'area' => $request->input('area'),
                     'city' => $request->input('city'),
                 ]);
@@ -139,7 +142,13 @@ class AuthController extends Controller
             if ($user->role === 'photographer') {
                 // Redirect to the photographer inbox
                 // TO DO change
-                return view('photographer.inbox'); // Ensure this route is defined
+                return redirect()->route('photographer.inbox'); // Ensure this route is defined
+                // return redirect()->route('photographer.inbox'); // Ensure this route is defined
+            }
+            else if ($user->role === 'admin') {
+                // Redirect to the photographer inbox
+                // TO DO change
+                return redirect()->route('admin.dashboard'); // Ensure this route is defined
                 // return redirect()->route('photographer.inbox'); // Ensure this route is defined
             }
 

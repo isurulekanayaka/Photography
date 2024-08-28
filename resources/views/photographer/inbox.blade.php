@@ -48,41 +48,68 @@
                         <th class="py-2 px-4 border-b border-white">Name</th>
                         <th class="py-2 px-4 border-b border-white">Mail</th>
                         <th class="py-2 px-4 border-b border-white">Contact Number</th>
+                        <th class="py-2 px-4 border-b border-white">Date</th>
+                        <th class="py-2 px-4 border-b border-white">Location</th>
                         <th class="py-2 px-4 border-b border-white">Message</th>
                         <th class="py-2 px-4 border-b border-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-white text-center">1</td>
-                        <td class="py-2 px-4 border-b border-white text-center">John</td>
-                        <td class="py-2 px-4 border-b border-white text-center">john@mail.com</td>
-                        <td class="py-2 px-4 border-b border-white text-center">1156</td>
-                        <td class="py-2 px-4 border-b border-white text-center">Pls CL me</td>
-                        <td class="py-2 px-4 border-b border-gray-400 text-center">
-                            <button class="bg-red-500 text-white py-1 px-3 rounded">Delete</button>
-                            <button class="bg-blue-500 text-white py-1 px-3 rounded ml-2"
-                                onclick="openPopup()">Reply</button>
-                        </td>
-                    </tr>
+                    @forelse ($appointments as $index => $appointment)
+                        <tr>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $index + 1 }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->user->name }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->user->email }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->user->contact }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->date }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->location }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->message }}</td>
+                            <td class="py-2 px-4 border-b border-white0 text-center">
+                                <a href="{{ route('photographer.approve', ['id' => $appointment->id]) }}">
+                                    <button class="bg-blue-500 text-white py-1 px-3 rounded">Approve</button>
+                                </a>
+                                <button class="bg-red-500 text-white py-1 px-3 rounded ml-2"
+                                    onclick="openPopup({{ $appointment->id }})">
+                                    Reject
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="py-2 px-4 border-b border-white text-center">No appointments found.
+                            </td>
+                        </tr>
+                    @endforelse
+
                 </tbody>
             </table>
         </div>
         <!-- Popup -->
         <div id="popup" class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden">
-            <div class="bg-white p-6 rounded shadow-lg  w-1/2">
-                <h2 class="text-xl font-semibold mb-4">Reply to Message</h2>
-                <textarea class="w-full p-2 border border-gray-300 rounded mb-4" rows="4" placeholder="Write your reply here..."></textarea>
-                <div class="flex justify-end">
-                    <button class="bg-red-500 text-white py-1 px-3 rounded mr-2" onclick="closePopup()">Cancel</button>
-                    <button class="bg-blue-500 text-white py-1 px-3 rounded">Send</button>
-                </div>
+            <div class="bg-white p-6 rounded shadow-lg w-1/2">
+                <h2 class="text-xl font-semibold mb-4">Provide a Reason for Rejection</h2>
+                <form action="{{ route('photographer.reject') }}" method="POST">
+                    @csrf
+                    <input type="hidden" value="" name="id" id="selectid">
+                    <textarea id="reason-textarea" class="w-full p-2 border border-gray-300 rounded mb-4" rows="4"
+                        placeholder="Type your reason here..." name="message" id="message"></textarea>
+                    <div class="flex justify-end">
+                        <button class="bg-red-500 text-white py-1 px-3 rounded mr-2" onclick="closePopup()" type="button">
+                            Cancel
+                        </button>
+                        <button id="send-button" class="bg-blue-500 text-white py-1 px-3 rounded" type="submit">
+                            Send
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
+
         <script>
-            function openPopup() {
-                document.getElementById("popup").classList.remove("hidden");
+            function openPopup(id) {
+                document.getElementById('selectid').value = id;
+                document.getElementById('popup').classList.remove('hidden');
             }
 
             function closePopup() {

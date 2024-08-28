@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Photographer extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'description',
         'experience',
-        'category',
+        'category_id',
         'area',
         'city',
         'website',
@@ -25,9 +25,25 @@ class Photographer extends Model
     protected $casts = [
         'user_id' => 'integer',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function gallery()
+    {
+        return $this->hasOne(Gallery::class);
+    }
+
+    // Define the inverse of the one-to-many relationship with Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    // Define the relationship to appointments
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'photographer_id');
     }
 }

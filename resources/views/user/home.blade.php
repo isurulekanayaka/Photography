@@ -114,11 +114,12 @@
                 <section class="py-12 ">
                     <div class="container mx-auto px-4">
                         <h2 class="text-2xl lg:text-5xl font-bold text-center text-white mb-10">Find Your <span
-                                class="text-orange-500">Perfect
-                                Photographer</span></h2>
-                        <form class="flex flex-row justify-center items-center gap-4 border-b">
-                            <input type="text" placeholder="Search by name or keyword"
-                                class="w-full  px-4 py-2  placeholder:text-white bg-transparent outline-none text-white">
+                                class="text-orange-500">Perfect Photographer</span>
+                        </h2>
+                        <form action="{{ route('photographers.search') }}" method="GET"
+                            class="flex flex-row justify-center items-center gap-4 border-b">
+                            <input type="text" name="search" placeholder="Search by name, city, area, or category"
+                                class="w-full px-4 py-2 placeholder:text-white bg-transparent outline-none text-white">
                             <button type="submit">
                                 <i class="fas fa-search text-white mr-4"></i>
                             </button>
@@ -143,7 +144,7 @@
                             <div class="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
                                 <div id="slider"
                                     class="h-full flex gap-8 items-center justify-start transition ease-out duration-700">
-                                    @foreach ($photographers as $photographer)
+                                    @forelse ($photographers as $photographer)
                                         <div class="flex flex-shrink-0 relative w-1/5 sm:w-1/5">
                                             <div
                                                 class="bg-transparent border w-full border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
@@ -153,14 +154,18 @@
                                                 <h3 class="text-xl font-semibold text-white transition-colors duration-300">
                                                     {{ $photographer->user->name }}</h3>
                                                 <p class="text-gray-100 transition-colors duration-300">
-                                                    {{ $photographer->category }}</p>
+                                                    {{ $photographer->category->name }}</p>
                                                 <a href="{{ route('photographer.profile', ['id' => $photographer->id]) }}">
                                                     <p class="mt-4 transition-colors duration-300 text-orange-500">View
                                                         Profile</p>
                                                 </a>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="col-span-full text-center">
+                                            <p class="text-gray-500">No photographers available at the moment.</p>
+                                        </div>
+                                    @endforelse
                                     <!-- Add more image containers as needed -->
                                 </div>
                             </div>
@@ -183,92 +188,20 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
                         <!-- Wedding Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/weddingcat.jpg') }}" alt="Wedding Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Wedding Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
+                        @forelse ($categories as $category)
+                            <a href="#" class="text-orange-500 font-semibold inline-block">
+                                <div
+                                    class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
+                                    <img src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/default-image.jpg') }}"
+                                        alt="Wedding Photographer" class="w-full h-48 object-cover rounded-lg mb-4">
+                                    <p class="text-gray-100 transition-colors duration-300">{{ $category->name }}</p>
+                                    <p class="mt-4 transition-colors duration-300"></p>
+                                </div>
+                            </a>
+                        @empty
+                            category not avlable.
+                        @endforelse
 
-                        <!-- Portrait Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/portraitcat.jpg') }}" alt="Portrait Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Portrait Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Event Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/eventcat.jpg') }}" alt="Event Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Event Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Fashion Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/fashioncat.jpg') }}" alt="Fashion Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Fashion Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Nature Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/naturecat.jpg') }}" alt="Nature Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Nature Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Sports Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/sportscat.jpg') }}" alt="Sports Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Sports Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Product Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/productcat.jpg') }}" alt="Product Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Product Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
-
-                        <!-- Travel Photographer -->
-                        <a href="#" class="text-orange-500 font-semibold inline-block">
-                            <div
-                                class="bg-transparent border border-white p-2 group hover:bg-[#252525] cursor-pointer hover:border-orange-500 rounded-lg shadow-lg transition-colors duration-300">
-                                <img src="{{ asset('images/travelcat.jpg') }}" alt="Travel Photographer"
-                                    class="w-full h-48 object-cover rounded-lg mb-4">
-                                <p class="text-gray-100 transition-colors duration-300">Travel Photographer</p>
-                                <p class="mt-4 transition-colors duration-300"></p>
-                            </div>
-                        </a>
                     </div>
                 </div>
             </div>
