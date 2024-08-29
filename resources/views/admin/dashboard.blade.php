@@ -20,8 +20,8 @@
 
         .bgicons {
             background-image:
-                url('{{ asset('images/camera1.png') }}'),
-                url('{{ asset('images/camera2.png') }}');
+                /* url('{{ asset('images/camera1.png') }}'),
+                url('{{ asset('images/camera2.png') }}'); */
             background-size: 32px 32px;
             background-position:
                 10% 20%,

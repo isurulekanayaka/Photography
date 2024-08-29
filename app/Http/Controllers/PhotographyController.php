@@ -56,9 +56,10 @@ class PhotographyController extends Controller
 
     public function profile(Request $request)
     {
+        $categories = Category::all();
         $user = Auth::user();
 
-        return view('photographer.profile', compact('user'));
+        return view('photographer.profile', compact('user','categories'));
     }
 
     public function profile_update(Request $request)
@@ -78,8 +79,8 @@ class PhotographyController extends Controller
                 'address_city' => 'nullable|string|max:255',
                 'categories' => 'nullable|string|max:255',
                 'availability' => 'nullable|string|max:255',
-                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'cover_image' => 'nullable',
+                'profile_image' => 'nullable',
             ]);
 
             // Update User info
@@ -108,7 +109,7 @@ class PhotographyController extends Controller
             // Update Photographer info
             $photographer->description = $request->input('description', $photographer->description);
             $photographer->experience = $request->input('experience', $photographer->experience);
-            $photographer->category = $request->input('categories', $photographer->category);
+            $photographer->category_id = $request->input('categories', $photographer->category);
             $photographer->area = $request->input('address_area', $photographer->area);
             $photographer->city = $request->input('address_city', $photographer->city);
             $photographer->website = $request->input('website', $photographer->website);
@@ -135,7 +136,7 @@ class PhotographyController extends Controller
                 // dd($photographer); // This will show the model after saving
             } catch (\Exception $e) {
                 // Log::error('Error saving photographer: ' . $e->getMessage());
-                // dd($e);
+                dd($e);
                 return redirect()->back()->withErrors('An error occurred while saving the photographer. Please try again later.');
             }
 

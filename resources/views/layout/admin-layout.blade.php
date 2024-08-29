@@ -25,7 +25,7 @@
             transition: background-color 0.2s;
             /* Smooth transition */
         }
-        .bgicons{
+        /* .bgicons{
             background-image: 
             url('{{ asset('images/camera1.png') }}'), 
             url('{{ asset('images/camera1.png') }}');
@@ -37,7 +37,7 @@
             30% 10%, 
             70% 80%;
         background-repeat: no-repeat;
-        }
+        } */
     </style>
 
 </head>

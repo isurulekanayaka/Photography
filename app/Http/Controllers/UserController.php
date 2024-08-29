@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Mail\ContactMessage;
 use App\Models\Photographer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -31,6 +33,17 @@ class UserController extends Controller
     }
     public function contactMessage(Request $request)
     {
-        dd($request);
+        // Validate the request data if necessary
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
+    
+        // Send the email
+        Mail::to($request->email)->send(new ContactMessage($request->name, $request->email, $request->message));
+    
+        // Optionally, return a response or redirect
+        return redirect()->back()->with('success', 'Your message has been sent!');
     }
 }
