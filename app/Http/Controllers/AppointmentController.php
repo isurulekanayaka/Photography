@@ -80,5 +80,47 @@ class AppointmentController extends Controller
         return redirect()->back()->with('success', 'Appointment rejected successfully.');
     }
     
+    public function approved(Request $request)
+    {
+        // Retrieve the logged-in photographer
+        $photographer = Auth::user()->photographer;
+
+        // Retrieve appointments for the photographer where approval is 'approved'
+        $appointments = Appointment::where('photographer_id', $photographer->id)
+            ->where('approval', 'approved')
+            ->get();
+
+        // Pass the appointments and user to the view
+        return view('photographer.approve-reject', compact('appointments'));
+    }
+
+    public function rejections(Request $request)
+    {
+        // Retrieve the logged-in photographer
+        $photographer = Auth::user()->photographer;
+
+        // Retrieve appointments for the photographer where approval is 'reject'
+        $appointments = Appointment::where('photographer_id', $photographer->id)
+            ->where('approval', 'reject')
+            ->get();
+
+        // Pass the appointments and user to the view
+        return view('photographer.approve-reject', compact('appointments'));
+    }
+
+    public function booking(Request $request)
+    {
+        // Retrieve the logged-in photographer
+        $photographer = Auth::user()->photographer;
+    
+        // Retrieve appointments for the photographer where approval is 'reject' and the date is today or later
+        $appointments = Appointment::where('photographer_id', $photographer->id)
+            ->where('approval', 'approved')
+            ->whereDate('date', '>=', now()->toDateString())
+            ->get();
+    
+        // Pass the appointments and user to the view
+        return view('photographer.approve-reject', compact('appointments'));
+    }
     
 }

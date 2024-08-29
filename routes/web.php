@@ -20,26 +20,20 @@ use App\Http\Controllers\PhotographyController;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect()->route('home');
-// });
-
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return redirect()->route('home');
 });
 
-// Login Register Routes
-// Show the registration form
+// Auth Routes
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-// Handle registration form submission
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
+// User Home loard
+Route::get('/home', [PhotographyController::class, 'home'])->name('home');
 Route::get('/photographers', [UserController::class, 'photographers'])->name('photographers');
-
 Route::get('photographers/filter', [PhotographyController::class, 'filter'])->name('photographers.filter');
 Route::get('photographers/search', [PhotographyController::class, 'search'])->name('photographers.search');
 
@@ -47,17 +41,13 @@ Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 Route::get('/about', [UserController::class, 'about'])->name('about');
 Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
+// Photographer Profile
+Route::get('/photographer/profile/{id}', [PhotographyController::class, 'show'])->name('photographer.profile');
 
 Route::post('appointments', [AppointmentController::class, 'store'])
     ->middleware('auth')
     ->name('appointments.store');
-
-// User Home loard
-Route::get('/home', [PhotographyController::class, 'home'])->name('home');
-
-// Photographer Profile
-Route::get('/photographer/profile/{id}', [PhotographyController::class, 'show'])->name('photographer.profile');
-
+Route::post('/contact', [UserController::class, 'contactMessage'])->name('contact');
 
 // photographer routes
 Route::middleware(['role:photographer'])->group(function () {
@@ -65,6 +55,10 @@ Route::middleware(['role:photographer'])->group(function () {
 
     Route::get('approve/{id}', [AppointmentController::class, 'approve'])->name('photographer.approve');
     Route::post('/reject', [AppointmentController::class, 'reject'])->name('photographer.reject');
+
+    Route::get('/approved', [AppointmentController::class, 'approved'])->name('photographer.approved');
+    Route::get('/rejections', [AppointmentController::class, 'rejections'])->name('photographer.rejections');
+    Route::get('/booking', [AppointmentController::class, 'booking'])->name('photographer.booking');
 
     Route::get('/update-profile', [PhotographyController::class, 'profile'])->name('photographer.update-profile');
 
@@ -83,4 +77,10 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+
+    Route::get('/admin-photographer', [AdminController::class, 'adminPhotographer'])->name('admin.photographer');
+    Route::get('/admin-user', [AdminController::class, 'adminUser'])->name('admin.user');
+    Route::get('/admin-admin', [AdminController::class, 'adminAdmin'])->name('admin.admin');
+    Route::delete('/user-delete/{id}', [AdminController::class, 'userDelete'])->name('user.destroy');
+    
 });

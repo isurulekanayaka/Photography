@@ -86,7 +86,8 @@
                 <!-- Contact Form -->
                 <div class="bg-gray-800 p-8 rounded-lg shadow-lg bgicons">
                     <h3 class="text-xl text-white font-semibold mb-4">Send Us a Message</h3>
-                    <form action="" class="space-y-4">
+                    <form action="{{ route('contact') }}" class="space-y-4" method="POST">
+                        @csrf
                         <div>
                             <label for="name" class="block text-sm text-gray-300 mb-2 flex justify-start">Your Name</label>
                             <input type="text" id="name" name="name" placeholder="Enter your name"
