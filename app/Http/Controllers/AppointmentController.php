@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Mail\AppointmentApproved;
+use App\Mail\AppointmentRejected;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -60,7 +63,10 @@ class AppointmentController extends Controller
         $appointment->approval = 'approved';
         $appointment->save();
     
-        return redirect()->back()->with('success', 'Appointment approved successfully.');
+        // Send approval email
+        Mail::to($appointment->user->email)->send(new AppointmentApproved($appointment));
+    
+        return redirect()->back()->with('success', 'Appointment approved successfully and email sent.');
     }
     
     public function reject(Request $request)
@@ -77,9 +83,12 @@ class AppointmentController extends Controller
         $appointment->approval = 'reject';
         $appointment->save();
     
-        return redirect()->back()->with('success', 'Appointment rejected successfully.');
-    }
+        // Send rejection email
+        Mail::to($appointment->user->email)->send(new AppointmentRejected($appointment, $request->message));
     
+        return redirect()->back()->with('success', 'Appointment rejected successfully and email sent.');
+    }
+
     public function approved(Request $request)
     {
         // Retrieve the logged-in photographer
@@ -115,7 +124,7 @@ class AppointmentController extends Controller
     
         // Retrieve appointments for the photographer where approval is 'reject' and the date is today or later
         $appointments = Appointment::where('photographer_id', $photographer->id)
-            ->where('approval', 'approved')
+            ->where('approval', 'confirm')
             ->whereDate('date', '>=', now()->toDateString())
             ->get();
     

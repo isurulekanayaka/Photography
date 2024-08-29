@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('location');
             $table->text('message');
-            $table->enum('approval', ['approved', 'not approved','reject'])->default('not approved'); // Set default value
+            $table->enum('approval', ['approved', 'not approved','reject','confirm'])->default('not approved'); // Set default value
             $table->timestamps();
         });        
     }

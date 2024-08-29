@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PhotographyController;
 
 /*
@@ -49,6 +50,9 @@ Route::post('appointments', [AppointmentController::class, 'store'])
     ->name('appointments.store');
 Route::post('/contact', [UserController::class, 'contactMessage'])->name('contact');
 
+Route::get('/payment-view/{id}', [PaymentController::class, 'paymentView'])->name('payment.view');
+Route::post('/payment-confirm/{id}', [PaymentController::class, 'paymentConfirm'])->name('payment.confirm');
+
 // photographer routes
 Route::middleware(['role:photographer'])->group(function () {
     Route::get('/inbox', [AppointmentController::class, 'inbox'])->name('photographer.inbox');
@@ -82,5 +86,4 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin-user', [AdminController::class, 'adminUser'])->name('admin.user');
     Route::get('/admin-admin', [AdminController::class, 'adminAdmin'])->name('admin.admin');
     Route::delete('/user-delete/{id}', [AdminController::class, 'userDelete'])->name('user.destroy');
-    
 });

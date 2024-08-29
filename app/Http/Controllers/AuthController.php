@@ -23,7 +23,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // dd($request);
         // Validate the request
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -36,7 +35,7 @@ class AuthController extends Controller
             'category' => 'nullable|string|max:50',
             'area' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
-            'role' => 'required|in:user,photographer,admin', // Ensure role is either 'user' or 'photographer'
+            'role' => 'required|in:user,photographer,admin', 
         ]);
 
         if ($validator->fails()) {
@@ -80,8 +79,10 @@ class AuthController extends Controller
                 'role' => $request->input('role'),
             ]);
             // dd($request);
+
             // Create photographer-specific details if the role is photographer
             if ($user->role === 'photographer') {
+
                 Photographer::create([
                     'user_id' => $user->id,
                     'profile_picture' => $profilePhotoPath, // Adjust the field name to match the migration
@@ -107,7 +108,6 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             // Log the exception
             // Log::error('Registration error: ' . $e->getMessage());
-
             // Redirect back with an error message
             return redirect()->back()
                 ->with('error', 'An error occurred during registration. Please try again.')

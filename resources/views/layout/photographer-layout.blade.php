@@ -25,21 +25,6 @@
             transition: background-color 0.2s;
             /* Smooth transition */
         }
-        .bgicons{
-            background-image: 
-            url('{{ asset('images/camera1.png') }}'), 
-            /* url('{{ asset('images/camera2.png') }}'), 
-            url('{{ asset('images/camera3.png') }}'),  */
-            url('{{ asset('images/camera1.png') }}');
-        background-size: 32px 32px;
-        background-position: 
-            10% 20%, 
-            80% 40%, 
-            50% 60%, 
-            30% 10%, 
-            70% 80%;
-        background-repeat: no-repeat;
-        }
     </style>
 
 </head>
@@ -50,7 +35,7 @@
     <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
     <!-- end sidenav -->
 
-    <main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-200 min-h-screen transition-all main bgicons">
+    <main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-200 min-h-screen transition-all main ">
         <!-- navbar -->
         @include('components.admin-navbar')
         <!-- end navbar -->

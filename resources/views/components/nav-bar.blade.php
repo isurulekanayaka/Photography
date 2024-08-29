@@ -4,8 +4,8 @@
             <div class="flex justify-between w-screen px-5">
                 <div>
                     <a class="text-3xl font-bold leading-none" href="{{ route('home') }}">
-                        <h1 class="text-white">YOUR <span class="text-orange-500">LOGO</span></h1>
-                        {{-- <img src="{{ asset('images/logo.png') }}" alt="LOGO" class="w-36"> --}}
+                        {{-- <h1 class="text-white">YOUR <span class="text-orange-500">LOGO</span></h1> --}}
+                        <img src="{{ asset('images/logo.png') }}" alt="LOGO" class="w-36">
                     </a>
                 </div>
 
@@ -31,8 +31,22 @@
                         href="{{ route('contact') }}">Contact Us</a></li>
             </ul>
 
-            <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold text-nowrap rounded-xl transition duration-200"
-                href="{{ route('login') }}">Sign in</a>
+            @if (Auth::check())
+                @php
+                    $nameParts = explode(' ', Auth::user()->name);
+                    $firstName = $nameParts[0];
+                @endphp
+                <p class="text-white whitespace-nowrap mr-5">Hello, {{ $firstName }}</p>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit"class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 text-sm text-gray-900 font-bold text-nowrap rounded-xl hover:bg-orange-500 hover:text-white border border-white"
+                    href="{{ route('logout') }}">Log Out </button>
+                </form>
+            @else
+                <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 text-sm text-gray-900 font-bold text-nowrap rounded-xl hover:bg-orange-500 hover:text-white border border-white"
+                    href="{{ route('login') }}">Sign in</a>
+            @endif
+
         </nav>
     </div>
 
