@@ -21,6 +21,27 @@
                 <span class="text-sm">Category Manage</span>
             </a>
         </li>
+        <li class="mb-1 group">
+            <a href="{{route('admin.photographer')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/photographer.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="hospital Icon">
+                <span class="text-sm">Photographer Manage</span>
+            </a>
+        </li>
+        <li class="mb-1 group">
+            <a href="{{route('admin.user')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/user.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="hospital Icon">
+                <span class="text-sm">User Manage</span>
+            </a>
+        </li>
+        <li class="mb-1 group">
+            <a href="{{route('admin.admin')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/admin.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="hospital Icon">
+                <span class="text-sm">Admin Manage</span>
+            </a>
+        </li>
         <span class="text-gray-400 font-bold">Setting</span>
         <li class="mb-1 group">
             <form action="{{ route('logout') }}" method="POST" class="inline">

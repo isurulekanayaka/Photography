@@ -29,4 +29,8 @@ class UserController extends Controller
     {
         return view('user.contact');
     }
+    public function contactMessage(Request $request)
+    {
+        dd($request);
+    }
 }

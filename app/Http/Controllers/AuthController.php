@@ -16,9 +16,9 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
-        $categories=Category::all();
+        $categories = Category::all();
 
-        return view('auth.register',compact('categories')); // Adjust the view path as necessary
+        return view('auth.register', compact('categories')); // Adjust the view path as necessary
     }
 
     public function register(Request $request)
@@ -36,7 +36,7 @@ class AuthController extends Controller
             'category' => 'nullable|string|max:50',
             'area' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
-            'role' => 'required|in:user,photographer', // Ensure role is either 'user' or 'photographer'
+            'role' => 'required|in:user,photographer,admin', // Ensure role is either 'user' or 'photographer'
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +79,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'role' => $request->input('role'),
             ]);
-// dd($request);
+            // dd($request);
             // Create photographer-specific details if the role is photographer
             if ($user->role === 'photographer') {
                 Photographer::create([
@@ -97,6 +97,11 @@ class AuthController extends Controller
             auth()->login($user);
 
             // Redirect to a specific route or view after registration
+            if($request->input('role') === 'admin')
+            {
+                return redirect()->back();
+            }
+            
             return redirect()->route('login'); // Replace 'home' with the desired route name
 
         } catch (\Exception $e) {
@@ -144,8 +149,7 @@ class AuthController extends Controller
                 // TO DO change
                 return redirect()->route('photographer.inbox'); // Ensure this route is defined
                 // return redirect()->route('photographer.inbox'); // Ensure this route is defined
-            }
-            else if ($user->role === 'admin') {
+            } else if ($user->role === 'admin') {
                 // Redirect to the photographer inbox
                 // TO DO change
                 return redirect()->route('admin.dashboard'); // Ensure this route is defined

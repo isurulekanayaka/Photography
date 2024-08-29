@@ -6,10 +6,32 @@
     <ul class="mt-4">
         <span class="text-gray-400 font-bold">Dashboard</span>
         <li class="mb-1 group">
+            <a href="{{route('photographer.booking')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/booking.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
+                <span class="text-sm">Booking Days</span>
+            </a>
+        </li>
+        <span class="text-gray-400 font-bold">My Appoiments</span>
+        <li class="mb-1 group">
             <a href="{{route('photographer.inbox')}}"
                 class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
                 <img src="{{ asset('images/inbox.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
-                <span class="text-sm">My Appoiments</span>
+                <span class="text-sm">Inbox</span>
+            </a>
+        </li>
+        <li class="mb-1 group">
+            <a href="{{route('photographer.approved')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/approve.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
+                <span class="text-sm">Approve</span>
+            </a>
+        </li>
+        <li class="mb-1 group">
+            <a href="{{route('photographer.rejections')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/reject.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
+                <span class="text-sm">Reject</span>
             </a>
         </li>
 
