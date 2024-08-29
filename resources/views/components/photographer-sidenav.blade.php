@@ -1,7 +1,8 @@
 <div class="fixed left-0 top-0 w-64 h-full bg-[#f8f4f3] p-4 z-50 sidebar-menu transition-transform">
     <a href="" class="flex items-center pb-4 border-b border-b-gray-800">
 
-        <h2 class="font-bold text-2xl">YOUR  <span class="bg-orange-500 text-white px-2 rounded-md">LOGO</span></h2>
+        {{-- <h2 class="font-bold text-2xl">YOUR  <span class="bg-orange-500 text-white px-2 rounded-md">LOGO</span></h2> --}}
+        <img src="{{ asset('images/PRO (1).png') }}" alt="LOGO" class="w-36 h-10">
     </a>
     <ul class="mt-4">
         <span class="text-gray-400 font-bold">Dashboard</span>
