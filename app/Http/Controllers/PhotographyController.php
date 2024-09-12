@@ -8,6 +8,7 @@ use Log;
 use Storage;
 use App\Models\Gallery;
 use App\Models\Photographer;
+use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,9 @@ class PhotographyController extends Controller
         try {
             // Find the photographer
             $photographer = Photographer::findOrFail($id);
-
+            $rating = Rating::calculate($id);
+            $latest = Rating::latestReview($id);
+            // dd($rating);
             // Find the gallery associated with the photographer
             $gallery = Gallery::where('photographer_id', $photographer->id)->first();
 
@@ -44,7 +47,7 @@ class PhotographyController extends Controller
                 'image10' => $gallery->image_10,
             ] : [];
 
-            return view('user.profile', compact('photographer', 'images'));
+            return view('user.profile', compact('photographer', 'images','rating','latest'));
         } catch (\Exception $e) {
             // Log the exception (optional)
             // Log::error('Error retrieving photographer or gallery: ' . $e->getMessage());
@@ -58,7 +61,6 @@ class PhotographyController extends Controller
     {
         $categories = Category::all();
         $user = Auth::user();
-
         return view('photographer.profile', compact('user','categories'));
     }
 

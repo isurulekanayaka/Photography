@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PhotographyController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +46,14 @@ Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 // Photographer Profile
 Route::get('/photographer/profile/{id}', [PhotographyController::class, 'show'])->name('photographer.profile');
 
-Route::post('appointments', [AppointmentController::class, 'store'])
-    ->middleware('auth')
-    ->name('appointments.store');
+Route::middleware(['auth'])->group(function () {
+    // Appointments route
+    Route::post('appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+
+    // Ratings route
+    Route::post('ratings', [RatingController::class, 'store'])->name('rating.store');
+});
+
 Route::post('/contact', [UserController::class, 'contactMessage'])->name('contact');
 
 Route::get('/payment-view/{id}', [PaymentController::class, 'paymentView'])->name('payment.view');

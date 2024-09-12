@@ -8,8 +8,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
     <style>
+        @layer utilities {
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
         body {
             overflow-x: hidden;
             /* Prevent horizontal scrolling */
@@ -66,6 +76,17 @@
                     <div
                         class="xl:w-[1275px] lg:w-[1275px] md:w-[94%] sm:w-[96%] xs:w-[92%] mx-auto flex flex-col gap-4 justify-center items-center relative xl:-top-[6rem] lg:-top-[6rem] md:-top-[4rem] sm:-top-[3rem] xs:-top-[2.2rem]  px-2">
                         <!-- FullName -->
+                        <div class="flex items-center">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg class="w-5 h-auto {{ $rating >= $i ? 'text-yellow-500' : 'text-gray-300' }} fill-current"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <path
+                                        d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                </svg>
+                            @endfor
+                            {{-- <span class="ml-2">{{ 4 }} out of 5 stars</span> --}}
+                        </div>
+
                         <h1 class="text-center text-orange-500 dark:text-white text-4xl">{{ $photographer->user->name }}
                         </h1>
                         <!-- About -->
@@ -120,7 +141,8 @@
                                         <h3 class="text-2xl text-white font-semibold mb-4">Send Your Message Quickly</h3>
                                         <form action="{{ route('appointments.store') }}" method="POST" class="space-y-4">
                                             @csrf
-                                            <input type="hidden" value="{{ $photographer->id }}" name="photographer_id" id="photographer_id">
+                                            <input type="hidden" value="{{ $photographer->id }}" name="photographer_id"
+                                                id="photographer_id">
                                             <div class="flex gap-2">
                                                 <!-- Date Input -->
                                                 <div class="relative">
@@ -129,7 +151,7 @@
                                                         placeholder="Select date"
                                                         class="w-full p-1 rounded-lg bg-transparent text-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                                 </div>
-                                        
+
                                                 <!-- Location Input -->
                                                 <div>
                                                     <label for="location"
@@ -139,21 +161,22 @@
                                                         class="w-full p-1 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder:text-white">
                                                 </div>
                                             </div>
-                                        
+
                                             <!-- Message Textarea -->
                                             <div>
-                                                <label for="message" class="block text-sm text-white mb-2">Your Message</label>
+                                                <label for="message" class="block text-sm text-white mb-2">Your
+                                                    Message</label>
                                                 <textarea id="message" name="message" placeholder="Type your message here"
                                                     class="placeholder:text-white w-full p-1 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none h-16"></textarea>
                                             </div>
-                                        
+
                                             <!-- Submit Button -->
                                             <button type="submit"
                                                 class="w-full py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition duration-300 ease-in-out">
                                                 Send
                                             </button>
                                         </form>
-                                        
+
                                     </div>
                                 </div>
 
@@ -215,11 +238,139 @@
                                 </div>
                             </div>
                         </section>
+                        <form action="{{ route('rating.store') }}" class="w-full" method="POST">
+                            @csrf
+                            <div class=" border-gray-700 bg-gray-800 p-8 shadow-lg rounded-lg w-full flex">
+                                <div class="w-1/2">
+                                    <!-- Rating Description -->
+                                    <p class="text-white text-lg font-semibold mb-4">Add rating description for
+                                        photographer
+                                    </p>
+                                    <textarea class="w-full bg-gray-700 p-4 rounded-lg text-white resize-none" rows="4" name="description"
+                                        id="description" placeholder="Write your review here..."></textarea>
+                                </div>
+                                <div class="w-1/2">
+                                    <!-- Rating Stars -->
+                                    <div class="flex justify-center space-x-2 mb-4">
+                                        <button onclick="setRating(1)" type="button">
+                                            <svg id="star1"
+                                                class="w-6 h-6 text-gray-400 hover:text-yellow-500 fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="setRating(2)" type="button">
+                                            <svg id="star2"
+                                                class="w-6 h-6  text-gray-400 hover:text-yellow-500 fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="setRating(3)" type="button">
+                                            <svg id="star3"
+                                                class="w-6 h-6 text-gray-400 hover:text-yellow-500 fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="setRating(4)" type="button">
+                                            <svg id="star4"
+                                                class="w-6 h-6 text-gray-400 hover:text-yellow-500 fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="setRating(5)" type="button">
+                                            <svg id="star5"
+                                                class="w-6 h-6 text-gray-400 hover:text-yellow-500 fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        </button>
+                                    </div>
 
+                                    <!-- Rating Display -->
+                                    <div class="text-center text-white mb-4">
+                                        <p>Rating: <span id="ratingValue">0</span>/5</p>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="flex justify-center space-x-2 mb-4">
+                                        <input type="hidden" name="rating" id="rating" value="">
+                                        <input type="hidden" value="{{ $photographer->id }}" name="photographer_id"
+                                            id="photographer_id">
+                                        <button
+                                            class="w-32 py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition duration-300 ease-in-out">
+                                            Submit Rating
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+
+
+                        <div class="mt-10 w-full flex justify-center gap-10">
+                            @forelse ($latest as $latest)
+                            <div class="w-1/3 bg-gray-800 p-5 rounded-md h-fit">
+                                <div>
+                                    <div class="flex">
+                                        <h4 class="text-white text-lg">{{$latest->user->name}}</h4>
+                                    </div>
+
+                                    <hr>
+                                    <p class=" text-gray-300 text-base h-36 overflow-y-scroll scrollbar-hide">{{$latest->description}} </p>
+                                </div>
+                                <div class="flex items-center justify-center mt-5">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <svg class="w-5 h-auto {{ $latest->rating_value >= $i ? 'text-yellow-500' : 'text-gray-300' }} fill-current"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                            <path
+                                                d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                        </svg>
+                                    @endfor
+                                </div>
+                            </div>
+                            @empty
+                                
+                            @endforelse
+                            
+
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
+        <script>
+            let rating = 0;
+
+            function setRating(value) {
+                rating = value;
+                document.getElementById('ratingValue').innerText = rating;
+                document.getElementById('rating').value = rating;
+
+                // Highlight the stars based on the rating
+                for (let i = 1; i <= 5; i++) {
+                    document.getElementById('star' + i).classList.remove('text-yellow-500');
+                    document.getElementById('star' + i).classList.add('text-gray-400');
+                    if (i <= rating) {
+                        document.getElementById('star' + i).classList.remove('text-gray-400');
+                        document.getElementById('star' + i).classList.add('text-yellow-500');
+                    }
+                }
+            }
+
+            function submitRating() {
+                // Handle rating submission, for example by sending the rating to your server
+                alert('You submitted a rating of: ' + rating);
+            }
+        </script>
         <script>
             let imageGalleryOpened = false;
             let imageGalleryActiveUrl = null;
