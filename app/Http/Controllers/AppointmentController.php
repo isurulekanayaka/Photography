@@ -125,11 +125,12 @@ class AppointmentController extends Controller
         // Retrieve appointments for the photographer where approval is 'reject' and the date is today or later
         $appointments = Appointment::where('photographer_id', $photographer->id)
             ->where('approval', 'confirm')
-            ->whereDate('date', '>=', now()->toDateString())
+            // ->whereDate('date', '>=', now()->toDateString())
             ->get();
     
+            // dd($photographer);
         // Pass the appointments and user to the view
-        return view('photographer.approve-reject', compact('appointments'));
+        return view('photographer.appoiment', compact('appointments'));
     }
     
 }

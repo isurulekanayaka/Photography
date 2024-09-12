@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 
@@ -320,8 +321,9 @@
                             @forelse ($latest as $latest)
                             <div class="w-1/3 bg-gray-800 p-5 rounded-md h-fit">
                                 <div>
-                                    <div class="flex">
+                                    <div class="flex justify-between">
                                         <h4 class="text-white text-lg">{{$latest->user->name}}</h4>
+                                        <h4 class="text-white text-lg">{{ $latest->updated_at->format('Y-m-d') }}</h4>
                                     </div>
 
                                     <hr>

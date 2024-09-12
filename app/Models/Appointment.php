@@ -29,4 +29,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // Define the one-to-one relationship with the Payment model
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

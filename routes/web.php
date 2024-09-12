@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/contact', [UserController::class, 'contactMessage'])->name('contact');
 
 Route::get('/payment-view/{id}', [PaymentController::class, 'paymentView'])->name('payment.view');
+
 Route::post('/payment-confirm/{id}', [PaymentController::class, 'paymentConfirm'])->name('payment.confirm');
 
 // photographer routes
@@ -77,6 +78,9 @@ Route::middleware(['role:photographer'])->group(function () {
     Route::get('/update-gallery', [GalleryController::class, 'gallery'])->name('photographer.update-gallery');
 
     Route::post('/galleries', [GalleryController::class, 'store'])->name('galleries.store');
+
+    Route::get('/my-payment', [PaymentController::class, 'index'])->name('photographer.mypayment');
+    Route::post('/payment-update', [PaymentController::class, 'paymentUpdate'])->name('payment.update');
 });
 
 // Admin routes
