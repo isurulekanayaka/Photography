@@ -13,6 +13,13 @@
                 <span class="text-sm">Booking Days</span>
             </a>
         </li>
+        <li class="mb-1 group">
+            <a href="{{route('photographer.mypayment')}}"
+                class="flex font-semibold items-center py-2 px-4 text-black hover:bg-[#f8ece8] rounded-md">
+                <img src="{{ asset('images/payments.png') }}" class="w-6 h-6 text-blue-500 mr-3" alt="inbox Icon">
+                <span class="text-sm">My Payments</span>
+            </a>
+        </li>
         <span class="text-gray-400 font-bold">My Appoiments</span>
         <li class="mb-1 group">
             <a href="{{route('photographer.inbox')}}"
