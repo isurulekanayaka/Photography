@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('website')->nullable(); // Column for website, nullable
             $table->string('profile_picture')->nullable(); // Column for profile picture, nullable
             $table->string('cover_image')->nullable(); // New column for cover image, nullable
+            $table->decimal('latitude', 10, 8)->nullable(); // New column for latitude, nullable
+            $table->decimal('longitude', 11, 8)->nullable(); // New column for longitude, nullable
             $table->string('availability')->default('available'); // New column for availability, default to 'available'
             $table->timestamps(); // Creates `created_at` and `updated_at` TIMESTAMP columns
     

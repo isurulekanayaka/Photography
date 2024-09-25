@@ -20,6 +20,8 @@ class Photographer extends Model
         'user_id',
         'availability',
         'cover_image',
+        'latitude',
+        'longitude',
     ];
 
     protected $casts = [

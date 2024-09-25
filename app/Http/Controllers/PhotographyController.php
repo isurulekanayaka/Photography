@@ -66,6 +66,7 @@ class PhotographyController extends Controller
 
     public function profile_update(Request $request)
     {
+        // dd($request);
         try {
             $user = auth()->user();
 
@@ -83,6 +84,8 @@ class PhotographyController extends Controller
                 'availability' => 'nullable|string|max:255',
                 'cover_image' => 'nullable',
                 'profile_image' => 'nullable',
+                'latitude' => 'nullable',
+                'longitude' => 'nullable',
             ]);
 
             // Update User info
@@ -116,6 +119,8 @@ class PhotographyController extends Controller
             $photographer->city = $request->input('address_city', $photographer->city);
             $photographer->website = $request->input('website', $photographer->website);
             $photographer->availability = $request->input('availability', $photographer->availability);
+            $photographer->latitude = $request->input('latitude', $photographer->latitude);
+            $photographer->longitude = $request->input('longitude', $photographer->longitude);
 
             // Handle the cover image upload
             if ($request->hasFile('cover_image')) {

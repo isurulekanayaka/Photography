@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 
@@ -9,6 +8,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* Ensure the map takes a specific height
+        #map {
+            height: 400px;
+            width: 100%;
+        } */
+    </style>
     <style>
         @layer utilities {
             .scrollbar-hide {
@@ -144,9 +151,9 @@
                                             @csrf
                                             <input type="hidden" value="{{ $photographer->id }}" name="photographer_id"
                                                 id="photographer_id">
-                                            <div class="flex gap-2">
+                                            <div class="flex gap-2 w-full">
                                                 <!-- Date Input -->
-                                                <div class="relative">
+                                                <div class="relative w-1/2">
                                                     <label for="date" class="block text-sm text-white mb-2">Date</label>
                                                     <input id="date" name="date" type="date"
                                                         placeholder="Select date"
@@ -154,12 +161,31 @@
                                                 </div>
 
                                                 <!-- Location Input -->
-                                                <div>
+                                                <div class="w-1/2">
                                                     <label for="location"
                                                         class="block text-sm text-white mb-2">Location</label>
                                                     <input id="location" name="location" type="text"
                                                         placeholder="Enter location"
                                                         class="w-full p-1 rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder:text-white">
+                                                </div>
+                                            </div>
+
+                                            <div class="flex gap-2 w-full">
+                                                <!-- strattime Input -->
+                                                <div class="relative w-1/2">
+                                                    <label for="strattime" class="block text-sm text-white mb-2">Start Time</label>
+                                                    <input id="strattime" name="strattime" type="time"
+                                                        placeholder="Select Strat Time"
+                                                        class="w-full p-1 rounded-lg bg-transparent text-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                                </div>
+
+                                                <!-- endtime Input -->
+                                                <div class="w-1/2">
+                                                    <label for="endtime"
+                                                        class="block text-sm text-white mb-2">End Time</label>
+                                                    <input id="endtime" name="endtime" type="time"
+                                                        placeholder="Enter End Time"
+                                                        class="w-full p-1 rounded-lg bg-transparent text-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                                 </div>
                                             </div>
 
@@ -193,15 +219,15 @@
                                             @if ($image)
                                                 <li class="group relative">
                                                     <img onclick="imageGalleryOpen(event)"
-                                                        src="{{ asset('storage/' . $image) }}" alt="Gallery Image"
-                                                        class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-                                                        loading="lazy" />
+                                                         src="{{ asset('storage/' . $image) }}" alt="Gallery Image"
+                                                         class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl cursor-pointer aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                                                         loading="lazy" />
                                                 </li>
                                             @else
                                                 <li class="group relative">
                                                     <img src="{{ asset('images/default-image.jpg') }}" alt="Default Image"
-                                                        class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg"
-                                                        loading="lazy" />
+                                                         class="object-cover w-full h-auto bg-gray-200 rounded-lg shadow-lg"
+                                                         loading="lazy" />
                                                 </li>
                                             @endif
                                         @empty
@@ -211,34 +237,90 @@
                                         @endforelse
                                     </ul>
                                 </div>
-
+                        
                                 <div id="imageGalleryModal"
-                                    class="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-50 select-none cursor-zoom-out hidden">
-                                    <div
-                                        class="relative flex flex-col items-center justify-center w-11/12 xl:w-4/5 h-11/12">
+                                     class="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-50 select-none cursor-zoom-out hidden">
+                                    <div class="relative flex flex-col items-center justify-center w-11/12 xl:w-4/5 h-11/12">
                                         <div onclick="imageGalleryPrev(event)"
-                                            class="absolute left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
+                                             class="absolute left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                                      d="M15.75 19.5L8.25 12l7.5-7.5" />
                                             </svg>
                                         </div>
                                         <img id="imageGalleryActiveImage"
-                                            class="object-contain object-center w-full h-full select-none cursor-zoom-out"
-                                            src="" alt="">
+                                             class="object-contain object-center w-full h-full select-none cursor-zoom-out"
+                                             src="" alt="">
                                         <div onclick="imageGalleryNext(event)"
-                                            class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
+                                             class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                                      d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        
                         </section>
+                        
+                        {{-- map --}}
+                        
+                        <div>
+                            @if ($photographer->latitude && $photographer->longitude)
+                            <div class="w-[1275px] my-5 px-2">
+                                <div id="map" class="w-full h-[400px]  rounded-lg"></div>
+                            </div>
+                                <input type="hidden" id="latitude" name="latitude" value="{{ $photographer->latitude }}">
+                                <input type="hidden" id="longitude" name="longitude" value="{{ $photographer->longitude }}">
+                            @else
+                                <p>No location data available for this photographer.</p>
+                            @endif
+                        </div>
+                    
+                        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                        <script>
+                            // Check if the latitude and longitude are present
+                            var latitude = document.getElementById('latitude').value;
+                            var longitude = document.getElementById('longitude').value;
+                    
+                            if (latitude && longitude) {
+                                // Initialize the map centered at the photographer's location
+                                var map = L.map('map').setView([latitude, longitude], 12);
+                    
+                                // Add the tile layer to the map (using OpenStreetMap)
+                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                    maxZoom: 19,
+                                }).addTo(map);
+                    
+                                // Create a marker for the photographer's location
+                                var marker = L.marker([latitude, longitude]).addTo(map)
+                                    .bindPopup("Photographer's Location")
+                                    .openPopup();
+                    
+                                // Event to get new latitude and longitude when clicking on the map
+                                function onMapClick(e) {
+                                    var newLat = e.latlng.lat;
+                                    var newLng = e.latlng.lng;
+                    
+                                    // Move the marker to the new location
+                                    marker.setLatLng([newLat, newLng]).update();
+                    
+                                    // Optionally, update the hidden input fields if needed
+                                    document.getElementById('latitude').value = newLat;
+                                    document.getElementById('longitude').value = newLng;
+                    
+                                    // Center the map on the new marker position
+                                    map.setView([newLat, newLng], 12);
+                                }
+                    
+                                // Add the click event listener to the map
+                                map.on('click', onMapClick);
+                            }
+                        </script>
+
                         <form action="{{ route('rating.store') }}" class="w-full" method="POST">
                             @csrf
                             <div class=" border-gray-700 bg-gray-800 p-8 shadow-lg rounded-lg w-full flex">
@@ -319,30 +401,30 @@
 
                         <div class="mt-10 w-full flex justify-center gap-10">
                             @forelse ($latest as $latest)
-                            <div class="w-1/3 bg-gray-800 p-5 rounded-md h-fit">
-                                <div>
-                                    <div class="flex justify-between">
-                                        <h4 class="text-white text-lg">{{$latest->user->name}}</h4>
-                                        <h4 class="text-white text-lg">{{ $latest->updated_at->format('Y-m-d') }}</h4>
-                                    </div>
+                                <div class="w-1/3 bg-gray-800 p-5 rounded-md h-fit">
+                                    <div>
+                                        <div class="flex justify-between">
+                                            <h4 class="text-white text-lg">{{ $latest->user->name }}</h4>
+                                            <h4 class="text-white text-lg">{{ $latest->updated_at->format('Y-m-d') }}</h4>
+                                        </div>
 
-                                    <hr>
-                                    <p class=" text-gray-300 text-base h-36 overflow-y-scroll scrollbar-hide">{{$latest->description}} </p>
+                                        <hr>
+                                        <p class=" text-gray-300 text-base h-36 overflow-y-scroll scrollbar-hide">
+                                            {{ $latest->description }} </p>
+                                    </div>
+                                    <div class="flex items-center justify-center mt-5">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <svg class="w-5 h-auto {{ $latest->rating_value >= $i ? 'text-yellow-500' : 'text-gray-300' }} fill-current"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                                            </svg>
+                                        @endfor
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center mt-5">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <svg class="w-5 h-auto {{ $latest->rating_value >= $i ? 'text-yellow-500' : 'text-gray-300' }} fill-current"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                                            <path
-                                                d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
-                                        </svg>
-                                    @endfor
-                                </div>
-                            </div>
                             @empty
-                                
                             @endforelse
-                            
+
 
                         </div>
                     </div>

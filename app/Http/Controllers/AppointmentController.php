@@ -36,14 +36,14 @@ class AppointmentController extends Controller
             'message' => 'required|string',
         ]);
 
-        $user = Auth::check();
+        $user = Auth::user();
 
         Appointment::create([
             'photographer_id' => $request->input('photographer_id'),
             'date' => $request->input('date'),
             'location' => $request->input('location'),
             'message' => $request->input('message'),
-            'user_id' => $user,
+            'user_id' => $user->id,
         ]);
 
         return redirect()->back()->with('success', 'Appointment created successfully.');

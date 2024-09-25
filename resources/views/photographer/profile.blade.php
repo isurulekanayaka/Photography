@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 
 <body class="text-gray-800 font-inter bgicons">
@@ -140,7 +141,8 @@
                         <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography
                             Categories</label>
                         <select id="categories" name="categories" class="w-full p-2 border border-gray-300 rounded">
-                            <option value="{{$user->photographer->category_id}}" selected>{{$user->photographer->category->name}}</option>
+                            <option value="{{ $user->photographer->category_id }}" selected>
+                                {{ $user->photographer->category->name }}</option>
                             @forelse ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @empty
@@ -179,6 +181,64 @@
                             class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your new password">
                     </div>
                 </div>
+
+                <div id="map" style="height: 400px;"></div>
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
+
+                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                <script>
+                    // Assuming you have the photographer's data available in your Blade template
+                    // For example:
+                    var photographerLatitude = {{ $user->photographer->latitude ?? 'null' }};
+                    var photographerLongitude = {{ $user->photographer->longitude ?? 'null' }};
+
+                    // Initialize the map with a default view
+                    var map = L.map('map').setView([7.873054, 80.771797], 8);
+
+                    // Add the tile layer to the map (using OpenStreetMap)
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                    }).addTo(map);
+
+                    var marker;
+
+                    // Check if latitude and longitude are not null
+                    if (photographerLatitude !== null && photographerLongitude !== null) {
+                        // Create a marker for the photographer's location
+                        var photographerLocation = L.marker([photographerLatitude, photographerLongitude]).addTo(map);
+                        photographerLocation.bindPopup("Photographer's Location").openPopup();
+
+                        // Center the map on the photographer's location
+                        map.setView([photographerLatitude, photographerLongitude], 13);
+
+                        // Store the lat and long values in hidden input fields
+                        document.getElementById('latitude').value = photographerLatitude;
+                        document.getElementById('longitude').value = photographerLongitude;
+                    }
+
+                    // Event to get latitude and longitude when clicking on the map
+                    function onMapClick(e) {
+                        var lat = e.latlng.lat;
+                        var lng = e.latlng.lng;
+                        console.log("Latitude: " + lat + ", Longitude: " + lng);
+
+                        // Set the marker on click
+                        if (marker) {
+                            marker.setLatLng(e.latlng);
+                        } else {
+                            marker = L.marker(e.latlng).addTo(map);
+                        }
+
+                        // Store the lat and long values in hidden input fields
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lng;
+                    }
+
+                    // Add the click event listener to the map
+                    map.on('click', onMapClick);
+                </script>
+
 
                 <!-- Submit Button -->
                 <div class="text-center">
