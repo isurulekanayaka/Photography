@@ -141,10 +141,12 @@
                         <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography
                             Categories (Main)</label>
                         <select id="categories" name="categories" class="w-full p-2 border border-gray-300 rounded">
-                            <option value="{{ $user->photographer->category_id }}" selected>
-                                {{ $user->photographer->category->name }}</option>
+                            {{-- <option value="{{ $user->photographer->category_id }}" selected>
+                                {{ $user->photographer->category->name }}</option> --}}
                             @forelse ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" 
+                                    {{$user->photographer->category_id === $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                </option>
                             @empty
                                 <option value="" disabled>-- No categories available --</option>
                             @endforelse

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
-use App\Models\Category;
 use Log;
 use Storage;
-use App\Models\Gallery;
-use App\Models\Photographer;
-use App\Models\Rating;
 use App\Models\User;
+use App\Models\Rating;
+use App\Models\Gallery;
+use App\Models\Category;
+use App\Models\Appointment;
+use App\Models\Photographer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -47,7 +48,7 @@ class PhotographyController extends Controller
                 'image10' => $gallery->image_10,
             ] : [];
 
-            return view('user.profile', compact('photographer', 'images','rating','latest'));
+            return view('user.profile', compact('photographer', 'images', 'rating', 'latest'));
         } catch (\Exception $e) {
             // Log the exception (optional)
             // Log::error('Error retrieving photographer or gallery: ' . $e->getMessage());
@@ -61,15 +62,15 @@ class PhotographyController extends Controller
     {
         $categories = Category::all();
         $user = Auth::user();
-        return view('photographer.profile', compact('user','categories'));
+        
+        return view('photographer.profile', compact('user', 'categories'));
     }
 
     public function profile_update(Request $request)
     {
-        // dd($request);
         try {
             $user = auth()->user();
-
+    
             // Validate the request data
             $request->validate([
                 'full_name' => 'required|string|max:255',
@@ -80,22 +81,22 @@ class PhotographyController extends Controller
                 'website' => 'nullable|url|max:255',
                 'address_area' => 'nullable|string|max:255',
                 'address_city' => 'nullable|string|max:255',
-                'categories' => 'nullable|string|max:255',
+                'categories' => 'nullable|array', // Change to array for categories
+                'categories.*' => 'integer|exists:categories,id', // Ensure each category ID exists
                 'availability' => 'nullable|string|max:255',
-                'cover_image' => 'nullable',
-                'profile_image' => 'nullable',
-                'latitude' => 'nullable',
-                'longitude' => 'nullable',
+                'cover_image' => 'nullable|image|max:2048', // Validate image size
+                'profile_image' => 'nullable|image|max:2048',
+                'latitude' => 'nullable|numeric',
+                'longitude' => 'nullable|numeric',
             ]);
-
+    
             // Update User info
             $user->name = $request->full_name;
             $user->email = $request->contact_email;
             $user->contact = $request->contact_number;
-
-            // If the user wants to update their password
+    
+            // Update password if old and new passwords are provided
             if ($request->filled('old_password') && $request->filled('new_password')) {
-                // Check if the old password matches
                 if (Hash::check($request->old_password, $user->password)) {
                     $user->password = Hash::make($request->new_password);
                 } else {
@@ -103,25 +104,20 @@ class PhotographyController extends Controller
                 }
             }
             $user->save();
-
+    
             // Check if the Photographer record exists
-            $photographer = $user->photographer;
-            if (!$photographer) {
-                $photographer = new Photographer();
-                $photographer->user_id = $user->id;
-            }
-
+            $photographer = $user->photographer ?? new Photographer(['user_id' => $user->id]);
+    
             // Update Photographer info
             $photographer->description = $request->input('description', $photographer->description);
             $photographer->experience = $request->input('experience', $photographer->experience);
-            $photographer->category_id = $request->input('categories', $photographer->category);
             $photographer->area = $request->input('address_area', $photographer->area);
             $photographer->city = $request->input('address_city', $photographer->city);
             $photographer->website = $request->input('website', $photographer->website);
             $photographer->availability = $request->input('availability', $photographer->availability);
             $photographer->latitude = $request->input('latitude', $photographer->latitude);
             $photographer->longitude = $request->input('longitude', $photographer->longitude);
-
+    
             // Handle the cover image upload
             if ($request->hasFile('cover_image')) {
                 if ($photographer->cover_image) {
@@ -129,7 +125,7 @@ class PhotographyController extends Controller
                 }
                 $photographer->cover_image = $request->file('cover_image')->store('cover_images', 'public');
             }
-
+    
             // Handle the profile image upload
             if ($request->hasFile('profile_image')) {
                 if ($photographer->profile_picture) {
@@ -137,22 +133,39 @@ class PhotographyController extends Controller
                 }
                 $photographer->profile_picture = $request->file('profile_image')->store('profile_images', 'public');
             }
-            try {
-                // dd($photographer); // This will show the model before saving
-                $photographer->save();
-                // dd($photographer); // This will show the model after saving
-            } catch (\Exception $e) {
-                // Log::error('Error saving photographer: ' . $e->getMessage());
-                dd($e);
-                return redirect()->back()->withErrors('An error occurred while saving the photographer. Please try again later.');
+    
+            // Save the photographer record
+            $photographer->save();
+    
+            // Assuming categories is an array
+            $categories = $request->categories ?? []; // This should be your categories array
+            // Check if categories array is not empty
+            if (!empty($categories)) {
+                // Delete all existing records for the photographer in the pivot table
+                $photographer->photographers_category()->detach(); // This will remove all associations
+    
+                // Prepare data for insertion
+                $dataToInsert = [];
+                foreach ($categories as $categoryId) {
+                    $dataToInsert[] = [
+                        'photographer_id' => $photographer->id,
+                        'category_id' => $categoryId,
+                    ];
+                }
+    
+                // Insert new records based on the categories array
+                DB::table('photographers_category')->insert($dataToInsert);
+                return redirect()->back()->with('success', 'Categories updated successfully.');
             }
-
+    
             return redirect()->back()->with('success', 'Profile updated successfully.');
         } catch (\Exception $e) {
-            // \Log::error('Profile update error: ' . $e->getMessage());
+            // Log the error for debugging purposes
+            \Log::error('Profile update error: ' . $e->getMessage());
             return redirect()->back()->withErrors('An error occurred while updating the profile. Please try again later.');
         }
     }
+    
 
     public function filter(Request $request)
     {
