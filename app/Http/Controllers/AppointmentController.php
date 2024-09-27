@@ -32,6 +32,8 @@ class AppointmentController extends Controller
         $request->validate([
             'photographer_id' => 'required|exists:photographers,id',
             'date' => 'required|date',
+            'starttime' => 'required|date_format:H:i',
+            'endtime' => 'required|date_format:H:i',
             'location' => 'required|string|max:255',
             'message' => 'required|string',
         ]);
@@ -41,6 +43,8 @@ class AppointmentController extends Controller
         Appointment::create([
             'photographer_id' => $request->input('photographer_id'),
             'date' => $request->input('date'),
+            'starttime' => $request->input('starttime'),
+            'endtime' => $request->input('endtime'),
             'location' => $request->input('location'),
             'message' => $request->input('message'),
             'user_id' => $user->id,

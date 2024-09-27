@@ -12,6 +12,8 @@ class Appointment extends Model
     protected $fillable = [
         'photographer_id',
         'date',
+        'starttime',
+        'endtime',
         'location',
         'message',
         'approval',
