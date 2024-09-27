@@ -65,6 +65,8 @@
                         <th class="py-2 px-4 border-b border-white">Mail</th>
                         <th class="py-2 px-4 border-b border-white">Contact Number</th>
                         <th class="py-2 px-4 border-b border-white">Date</th>
+                        <th class="py-2 px-4 border-b border-white">Start Time</th>
+                        <th class="py-2 px-4 border-b border-white">End Time</th>
                         <th class="py-2 px-4 border-b border-white">Location</th>
                         <th class="py-2 px-4 border-b border-white">Message</th>
                     </tr>
@@ -77,6 +79,8 @@
                             <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->user->email }}</td>
                             <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->user->contact }}</td>
                             <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->date }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->starttime }}</td>
+                            <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->endtime }}</td>
                             <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->location }}</td>
                             <td class="py-2 px-4 border-b border-white text-center">{{ $appointment->message }}</td>
                         </tr>

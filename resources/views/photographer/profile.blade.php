@@ -139,7 +139,7 @@
                     <!-- Photography Categories Input -->
                     <div class="w-1/2">
                         <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography
-                            Categories</label>
+                            Categories (Main)</label>
                         <select id="categories" name="categories" class="w-full p-2 border border-gray-300 rounded">
                             <option value="{{ $user->photographer->category_id }}" selected>
                                 {{ $user->photographer->category->name }}</option>
@@ -165,6 +165,26 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Photography Categories (others) -->
+                <div class="mb-4">
+                    <!-- Photography Categories Input -->
+                    <div class="w-full">
+                        <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography Categories (Others)</label>
+                        
+                        <div id="categories" class="flex gap-5">
+                            @forelse ($categories as $category)
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="category_{{ $category->id }}" name="categories[]" value="{{ $category->id }}"
+                                           class="mr-2">
+                                    <label for="category_{{ $category->id }}" class="text-gray-700">{{ $category->name }}</label>
+                                </div>
+                            @empty
+                                <p class="text-gray-500">-- No categories available --</p>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>                
 
                 <!-- Password Update -->
                 <div class="flex gap-5 mb-4">
@@ -199,6 +219,7 @@
                     // Add the tile layer to the map (using OpenStreetMap)
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
+                        minZoom:2,
                     }).addTo(map);
 
                     var marker;
@@ -210,7 +231,7 @@
                         photographerLocation.bindPopup("Photographer's Location").openPopup();
 
                         // Center the map on the photographer's location
-                        map.setView([photographerLatitude, photographerLongitude], 13);
+                        map.setView([photographerLatitude, photographerLongitude], 7);
 
                         // Store the lat and long values in hidden input fields
                         document.getElementById('latitude').value = photographerLatitude;

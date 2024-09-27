@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('photographer_id')->constrained()->onDelete('cascade');
             $table->date('date');
+            $table->time('starttime');
+            $table->time('endtime');
             $table->string('location');
             $table->text('message');
             $table->enum('approval', ['approved', 'not approved','reject','confirm'])->default('not approved'); // Set default value
