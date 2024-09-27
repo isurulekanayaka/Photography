@@ -58,4 +58,9 @@ class Photographer extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function photographers_category()
+    {
+        return $this->belongsToMany(Category::class, 'photographers_category', 'photographer_id', 'category_id');
+    }
 }
