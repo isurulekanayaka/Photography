@@ -38,6 +38,14 @@
             transition: background-color 0.2s;
             /* Smooth transition */
         }
+
+        .category-label::before {
+            content: "• ";
+            color: white;
+            /* Optional: Change the dot color */
+            margin-right: 5px;
+            /* Optional: Add some space after the dot */
+        }
     </style>
     <script>
         document.addEventListener('mousemove', function(e) {
@@ -104,45 +112,64 @@
                         <!-- Detail -->
                         <div class="w-full my-auto py-6 flex flex-col justify-center gap-2">
                             <div class="w-full flex sm:flex-row xs:flex-col gap-2 justify-center mx-auto">
-                                <div class="w-1/4">
-                                    <dl class="text-gray-900 divide-y divide-gray-200 ">
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Full Name</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->user->name }}
-                                            </dd>
+                                <div class="w-2/4 ">
+                                    <div class="flex gap-5 border-b mb-2">
+                                        <div class="w-2/4">
+                                            <dl class="text-gray-900 divide-y divide-gray-200 ">
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Full Name</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">
+                                                        {{ $photographer->user->name }}
+                                                    </dd>
+                                                </div>
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Email</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">
+                                                        {{ $photographer->user->email }}
+                                                    </dd>
+                                                </div>
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Availability</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">Available</dd>
+                                                </div>
+                                            </dl>
                                         </div>
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Email</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->user->email }}
-                                            </dd>
-                                        </div>
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Availability</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">Available</dd>
-                                        </div>
-                                    </dl>
-                                </div>
-                                <div class="w-1/4">
-                                    <dl class="text-gray-900 divide-y divide-gray-200 ">
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Phone Number</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">
-                                                {{ $photographer->user->contact }}</dd>
-                                        </div>
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Location</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->area }}
-                                                {{ $photographer->city }} </dd>
-                                        </div>
+                                        <div class="w-2/4">
+                                            <dl class="text-gray-900 divide-y divide-gray-200 ">
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Phone Number</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">
+                                                        {{ $photographer->user->contact }}</dd>
+                                                </div>
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Location</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">
+                                                        {{ $photographer->area }}
+                                                        {{ $photographer->city }} </dd>
+                                                </div>
 
 
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 text-white md:text-lg">Website</dt>
-                                            <dd class="text-lg font-semibold text-gray-300">{{ $photographer->website }}
-                                            </dd>
+                                                <div class="flex flex-col py-3">
+                                                    <dt class="mb-1 text-white md:text-lg">Website</dt>
+                                                    <dd class="text-lg font-semibold text-gray-300">
+                                                        {{ $photographer->website }}
+                                                    </dd>
+                                                </div>
+                                            </dl>
                                         </div>
-                                    </dl>
+                                    </div>
+                                    <div>
+                                        <label for="" class="mb-1 text-white md:text-lg">All Categories</label>
+                                        <div class="flex">
+                                            @foreach ($photographer->photographers_category as $category)
+                                                <label for=""
+                                                    class="mb-1 text-white md:text-lg mr-5 category-label">{{ $category->name }}</label><br>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
                                 </div>
+
                                 <div class="w-2/4">
                                     <div
                                         class="p-8 rounded-lg shadow-lg max-w-md mx-auto border border-gray-700 mb-10 bg-gray-800">

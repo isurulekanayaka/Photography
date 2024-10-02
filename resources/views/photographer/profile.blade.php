@@ -144,8 +144,9 @@
                             {{-- <option value="{{ $user->photographer->category_id }}" selected>
                                 {{ $user->photographer->category->name }}</option> --}}
                             @forelse ($categories as $category)
-                                <option value="{{ $category->id }}" 
-                                    {{$user->photographer->category_id === $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                <option value="{{ $category->id }}"
+                                    {{ $user->photographer->category_id === $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
                                 </option>
                             @empty
                                 <option value="" disabled>-- No categories available --</option>
@@ -172,21 +173,26 @@
                 <div class="mb-4">
                     <!-- Photography Categories Input -->
                     <div class="w-full">
-                        <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography Categories (Others)</label>
-                        
+                        <label class="block text-gray-700 font-semibold mb-2" for="categories">Photography Categories
+                            (Others)</label>
+
                         <div id="categories" class="flex gap-5">
                             @forelse ($categories as $category)
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="category_{{ $category->id }}" name="categories[]" value="{{ $category->id }}"
-                                           class="mr-2">
-                                    <label for="category_{{ $category->id }}" class="text-gray-700">{{ $category->name }}</label>
+                                    <input type="checkbox" id="category_{{ $category->id }}" name="categories[]"
+                                        value="{{ $category->id }}"
+                                        {{ $user->photographer->photographers_category->contains('id', $category->id) ? 'checked' : '' }}
+                                        class="mr-2">
+                                    <label for="category_{{ $category->id }}"
+                                        class="text-gray-700">{{ $category->name }}</label>
                                 </div>
                             @empty
                                 <p class="text-gray-500">-- No categories available --</p>
                             @endforelse
                         </div>
                     </div>
-                </div>                
+                </div>
+
 
                 <!-- Password Update -->
                 <div class="flex gap-5 mb-4">
@@ -221,7 +227,7 @@
                     // Add the tile layer to the map (using OpenStreetMap)
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
-                        minZoom:2,
+                        minZoom: 2,
                     }).addTo(map);
 
                     var marker;
